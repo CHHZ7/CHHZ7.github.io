@@ -15,13 +15,15 @@
         :root {
             --primary-color: #3498db;
             --secondary-color: #e74c3c;
+            --accent-color: #9b59b6;
             --background-dark: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
             --background-light: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             --text-dark: #ecf0f1;
             --text-light: #4a5568;
-            --card-dark: rgba(44, 62, 80, 0.7);
-            --card-light: rgba(255, 255, 255, 0.7);
-            --shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            --card-dark: rgba(44, 62, 80, 0.85);
+            --card-light: rgba(255, 255, 255, 0.85);
+            --shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+            --border-radius: 16px;
         }
         
         body {
@@ -44,45 +46,49 @@
             font-size: clamp(1.5rem, 4vw, 2.5rem);
             text-align: center;
             z-index: 100;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
             background: var(--card-dark);
-            padding: 10px 20px;
-            border-radius: 50px;
-            backdrop-filter: blur(4px);
+            padding: 12px 24px;
+            border-radius: var(--border-radius);
+            backdrop-filter: blur(12px);
             box-shadow: var(--shadow);
             transition: all 0.3s ease;
             max-width: 90%;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .title:hover {
             transform: translateX(-50%) scale(1.05);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
         }
         
         .sticker {
             position: absolute;
-            padding: 10px 16px;
-            border-radius: 8px;
+            padding: 12px 18px;
+            border-radius: var(--border-radius);
             color: white;
             font-family: "微软雅黑", "PingFang SC", sans-serif;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
             white-space: nowrap;
             cursor: pointer;
             user-select: none;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.5s ease;
+            transition: all 0.3s ease;
             z-index: 1;
-            font-weight: 500;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+            font-weight: 600;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
             max-width: 90vw;
             overflow: hidden;
             text-overflow: ellipsis;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
         }
         
         .sticker:hover {
-            transform: scale(1.08);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+            transform: scale(1.1);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
             z-index: 2;
         }
         
@@ -106,15 +112,24 @@
                 transform: scale(1);
             }
             50% {
-                transform: scale(1.05);
+                transform: scale(1.08);
+            }
+        }
+        
+        @keyframes glow {
+            0%, 100% {
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+            }
+            50% {
+                box-shadow: 0 6px 25px rgba(255, 255, 255, 0.2);
             }
         }
         
         .heart {
             position: absolute;
-            width: 20px;
-            height: 20px;
-            background: rgba(255, 99, 132, 0.7);
+            width: 24px;
+            height: 24px;
+            background: rgba(255, 99, 132, 0.8);
             transform: rotate(45deg);
             z-index: 0;
             pointer-events: none;
@@ -122,21 +137,21 @@
         
         .heart:before, .heart:after {
             content: '';
-            width: 20px;
-            height: 20px;
-            background: rgba(255, 99, 132, 0.7);
+            width: 24px;
+            height: 24px;
+            background: rgba(255, 99, 132, 0.8);
             border-radius: 50%;
             position: absolute;
         }
         
         .heart:before {
-            top: -10px;
+            top: -12px;
             left: 0;
         }
         
         .heart:after {
             top: 0;
-            left: -10px;
+            left: -12px;
         }
         
         @keyframes heartFloat {
@@ -145,27 +160,9 @@
                 opacity: 1;
             }
             100% {
-                transform: rotate(45deg) translateY(-100px) scale(0.5);
+                transform: rotate(45deg) translateY(-120px) scale(0.5);
                 opacity: 0;
             }
-        }
-        
-        .info-panel {
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-            background: var(--card-dark);
-            padding: 10px 15px;
-            border-radius: 10px;
-            box-shadow: var(--shadow);
-            font-size: 0.9rem;
-            color: var(--text-dark);
-            z-index: 100;
-            backdrop-filter: blur(4px);
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            max-width: 200px;
         }
         
         .controls {
@@ -174,18 +171,18 @@
             right: 20px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
             z-index: 100;
         }
         
         .control-btn {
             background: var(--card-dark);
-            padding: 8px 15px;
-            border-radius: 50px;
+            padding: 10px 18px;
+            border-radius: var(--border-radius);
             box-shadow: var(--shadow);
             font-size: 0.9rem;
             color: var(--text-dark);
-            backdrop-filter: blur(4px);
+            backdrop-filter: blur(12px);
             cursor: pointer;
             transition: all 0.3s ease;
             border: none;
@@ -193,12 +190,14 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 5px;
+            gap: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .control-btn:hover {
             background: rgba(52, 73, 94, 0.9);
-            transform: scale(1.05);
+            transform: scale(1.08);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
         }
         
         .particle {
@@ -212,14 +211,14 @@
             position: absolute;
             top: 80px;
             right: 20px;
-            background: rgba(44, 62, 80, 0.9);
-            padding: 15px;
-            border-radius: 10px;
+            background: rgba(44, 62, 80, 0.95);
+            padding: 18px;
+            border-radius: var(--border-radius);
             box-shadow: var(--shadow);
             color: var(--text-dark);
             z-index: 100;
-            backdrop-filter: blur(4px);
-            width: 220px;
+            backdrop-filter: blur(12px);
+            width: 240px;
             display: none;
             border: 1px solid rgba(255, 255, 255, 0.1);
             max-height: 80vh;
@@ -227,11 +226,12 @@
         }
         
         .settings-panel h3 {
-            margin-bottom: 10px;
-            font-size: 1rem;
+            margin-bottom: 12px;
+            font-size: 1.1rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            color: var(--accent-color);
         }
         
         .close-btn {
@@ -241,43 +241,46 @@
             font-size: 1.2rem;
             cursor: pointer;
             padding: 0;
-            width: 24px;
-            height: 24px;
+            width: 28px;
+            height: 28px;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 50%;
+            transition: all 0.3s ease;
         }
         
         .close-btn:hover {
             background: rgba(255, 255, 255, 0.1);
+            transform: rotate(90deg);
         }
         
         .setting-item {
-            margin-bottom: 12px;
+            margin-bottom: 16px;
         }
         
         .setting-item label {
             display: block;
-            margin-bottom: 5px;
-            font-size: 0.8rem;
+            margin-bottom: 6px;
+            font-size: 0.85rem;
         }
         
         .setting-item input[type="range"] {
             width: 100%;
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 5px;
-            height: 5px;
+            border-radius: 10px;
+            height: 6px;
             outline: none;
         }
         
         .setting-item input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
-            width: 15px;
-            height: 15px;
+            width: 18px;
+            height: 18px;
             border-radius: 50%;
             background: var(--primary-color);
             cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
         
         .theme-toggle {
@@ -285,24 +288,26 @@
             top: 20px;
             left: 20px;
             background: var(--card-dark);
-            padding: 8px 15px;
-            border-radius: 50px;
+            padding: 10px 18px;
+            border-radius: var(--border-radius);
             box-shadow: var(--shadow);
             font-size: 0.9rem;
             color: var(--text-dark);
             z-index: 100;
-            backdrop-filter: blur(4px);
+            backdrop-filter: blur(12px);
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 5px;
+            gap: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .theme-toggle:hover {
             background: rgba(52, 73, 94, 0.9);
-            transform: scale(1.05);
+            transform: scale(1.08);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
         }
         
         .music-player {
@@ -310,16 +315,17 @@
             bottom: 20px;
             left: 20px;
             background: var(--card-dark);
-            padding: 10px 15px;
-            border-radius: 10px;
+            padding: 12px 18px;
+            border-radius: var(--border-radius);
             box-shadow: var(--shadow);
             color: var(--text-dark);
             z-index: 100;
-            backdrop-filter: blur(4px);
+            backdrop-filter: blur(12px);
             display: flex;
             align-items: center;
-            gap: 10px;
-            max-width: 250px;
+            gap: 12px;
+            max-width: 280px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .music-btn {
@@ -328,22 +334,24 @@
             color: var(--text-dark);
             font-size: 1.2rem;
             cursor: pointer;
-            padding: 5px;
+            padding: 6px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: all 0.3s ease;
         }
         
         .music-btn:hover {
             background: rgba(255, 255, 255, 0.1);
+            transform: scale(1.1);
         }
         
         .progress-bar {
-            width: 100px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 2px;
+            width: 120px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 3px;
             overflow: hidden;
         }
         
@@ -352,6 +360,7 @@
             background: var(--primary-color);
             width: 0%;
             transition: width 0.1s linear;
+            border-radius: 3px;
         }
         
         .effect-buttons {
@@ -360,18 +369,18 @@
             left: 20px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
             z-index: 100;
         }
         
         .effect-btn {
             background: var(--card-dark);
-            padding: 8px 15px;
-            border-radius: 50px;
+            padding: 10px 18px;
+            border-radius: var(--border-radius);
             box-shadow: var(--shadow);
             font-size: 0.9rem;
             color: var(--text-dark);
-            backdrop-filter: blur(4px);
+            backdrop-filter: blur(12px);
             cursor: pointer;
             transition: all 0.3s ease;
             border: none;
@@ -379,12 +388,19 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 5px;
+            gap: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .effect-btn:hover {
             background: rgba(52, 73, 94, 0.9);
-            transform: scale(1.05);
+            transform: scale(1.08);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+        }
+        
+        .effect-btn.active {
+            background: var(--accent-color);
+            box-shadow: 0 6px 20px rgba(155, 89, 182, 0.4);
         }
         
         .notification {
@@ -392,32 +408,23 @@
             bottom: 80px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(44, 62, 80, 0.9);
+            background: rgba(44, 62, 80, 0.95);
             color: var(--text-dark);
-            padding: 10px 20px;
-            border-radius: 50px;
+            padding: 12px 24px;
+            border-radius: var(--border-radius);
             box-shadow: var(--shadow);
             z-index: 1000;
-            backdrop-filter: blur(4px);
+            backdrop-filter: blur(12px);
             display: none;
             animation: fadeInOut 3s ease;
             text-align: center;
             max-width: 80%;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         @keyframes fadeInOut {
             0%, 100% { opacity: 0; transform: translateX(-50%) translateY(20px); }
             10%, 90% { opacity: 1; transform: translateX(-50%) translateY(0); }
-        }
-        
-        .sticker-counter {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        .counter-icon {
-            font-size: 1.2rem;
         }
         
         .mobile-menu {
@@ -426,11 +433,12 @@
             top: 20px;
             right: 20px;
             background: var(--card-dark);
-            padding: 10px;
-            border-radius: 10px;
+            padding: 12px;
+            border-radius: var(--border-radius);
             box-shadow: var(--shadow);
             z-index: 100;
-            backdrop-filter: blur(4px);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .mobile-menu-btn {
@@ -439,7 +447,12 @@
             color: var(--text-dark);
             font-size: 1.5rem;
             cursor: pointer;
-            padding: 5px;
+            padding: 6px;
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-menu-btn:hover {
+            transform: scale(1.1);
         }
         
         .mobile-panel {
@@ -448,25 +461,37 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.85);
             z-index: 1000;
             display: none;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             gap: 20px;
+            backdrop-filter: blur(8px);
         }
         
         .mobile-panel button {
             background: var(--card-dark);
             border: none;
             color: var(--text-dark);
-            padding: 15px 30px;
-            border-radius: 50px;
+            padding: 16px 32px;
+            border-radius: var(--border-radius);
             font-size: 1.2rem;
             cursor: pointer;
             width: 80%;
             max-width: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+        
+        .mobile-panel button:hover {
+            transform: scale(1.05);
+            background: rgba(52, 73, 94, 0.9);
         }
         
         .close-mobile {
@@ -478,59 +503,18 @@
             color: var(--text-dark);
             font-size: 2rem;
             cursor: pointer;
+            transition: all 0.3s ease;
         }
         
-        @media (max-width: 768px) {
-            .title {
-                top: 10px;
-                padding: 8px 16px;
-            }
-            
-            .controls, .effect-buttons, .theme-toggle {
-                display: none;
-            }
-            
-            .mobile-menu {
-                display: block;
-            }
-            
-            .info-panel {
-                bottom: 70px;
-                right: 10px;
-                font-size: 0.8rem;
-                padding: 8px 12px;
-            }
-            
-            .music-player {
-                bottom: 10px;
-                left: 10px;
-                padding: 8px 12px;
-            }
-            
-            .settings-panel {
-                top: 60px;
-                right: 10px;
-                width: calc(100% - 20px);
-                max-width: 300px;
-            }
-            
-            .sticker {
-                font-size: 14px;
-                padding: 8px 12px;
-            }
-        }
-        
-        @media (min-width: 769px) {
-            .mobile-menu, .mobile-panel {
-                display: none !important;
-            }
+        .close-mobile:hover {
+            transform: rotate(90deg);
         }
         
         .toggle-switch {
             position: relative;
             display: inline-block;
-            width: 50px;
-            height: 24px;
+            width: 54px;
+            height: 28px;
         }
         
         .toggle-switch input {
@@ -548,14 +532,14 @@
             bottom: 0;
             background-color: #ccc;
             transition: .4s;
-            border-radius: 24px;
+            border-radius: 28px;
         }
         
         .slider:before {
             position: absolute;
             content: "";
-            height: 16px;
-            width: 16px;
+            height: 20px;
+            width: 20px;
             left: 4px;
             bottom: 4px;
             background-color: white;
@@ -569,6 +553,90 @@
         
         input:checked + .slider:before {
             transform: translateX(26px);
+        }
+        
+        @media (max-width: 768px) {
+            .title {
+                top: 15px;
+                padding: 10px 20px;
+                font-size: 1.3rem;
+            }
+            
+            .controls, .effect-buttons, .theme-toggle {
+                display: none;
+            }
+            
+            .mobile-menu {
+                display: block;
+            }
+            
+            .music-player {
+                bottom: 15px;
+                left: 15px;
+                padding: 10px 15px;
+                max-width: 250px;
+            }
+            
+            .settings-panel {
+                top: 70px;
+                right: 15px;
+                width: calc(100% - 30px);
+                max-width: 300px;
+            }
+            
+            .sticker {
+                font-size: 14px;
+                padding: 10px 14px;
+            }
+            
+            .control-btn, .effect-btn, .theme-toggle {
+                padding: 12px 16px;
+                font-size: 0.85rem;
+            }
+        }
+        
+        @media (min-width: 769px) {
+            .mobile-menu, .mobile-panel {
+                display: none !important;
+            }
+        }
+        
+        .floating-controls {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 100;
+        }
+        
+        .floating-btn {
+            background: var(--card-dark);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            box-shadow: var(--shadow);
+            color: var(--text-dark);
+            backdrop-filter: blur(12px);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .floating-btn:hover {
+            background: rgba(52, 73, 94, 0.9);
+            transform: scale(1.1);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+        }
+        
+        .floating-btn i {
+            font-size: 1.2rem;
         }
     </style>
 </head>
@@ -604,10 +672,6 @@
     <div class="settings-panel" id="settingsPanel">
         <h3>设置 <button class="close-btn" id="closeSettings"><i class="fas fa-times"></i></button></h3>
         <div class="setting-item">
-            <label for="stickerCount">标签数量: <span id="countValue">15</span></label>
-            <input type="range" id="stickerCount" min="5" max="30" value="15">
-        </div>
-        <div class="setting-item">
             <label for="animationSpeed">动画速度: <span id="speedValue">正常</span></label>
             <input type="range" id="animationSpeed" min="1" max="5" value="3">
         </div>
@@ -632,10 +696,9 @@
         </div>
     </div>
     
-    <div class="info-panel">
-        <div class="sticker-counter">
-            <span class="counter-icon"><i class="fas fa-tag"></i></span> 标签数量: <span id="count">0</span>
-        </div>
+    <div class="floating-controls">
+        <button class="floating-btn" id="addStickerBtn"><i class="fas fa-plus"></i></button>
+        <button class="floating-btn" id="floatingSettingsBtn"><i class="fas fa-cog"></i></button>
     </div>
     
     <div class="music-player">
@@ -772,7 +835,6 @@
         let particleInterval;
         
         let settings = {
-            stickerCount: 15,
             animationSpeed: 3,
             fontSize: 3,
             enableParticles: true,
@@ -798,7 +860,7 @@
                 const dx = Math.abs(x - pos.x);
                 const dy = Math.abs(y - pos.y);
                 
-                if (dx < (width + pos.width) / 2 + 10 && dy < (height + pos.height) / 2 + 10) {
+                if (dx < (width + pos.width) / 2 + 15 && dy < (height + pos.height) / 2 + 15) {
                     return true;
                 }
             }
@@ -806,6 +868,20 @@
         }
 
         function createSticker() {
+            if (stickerCount >= 2) {
+                const oldestSticker = stickerPositions[0].element;
+                oldestSticker.style.transform = 'scale(0)';
+                oldestSticker.style.opacity = '0';
+                
+                setTimeout(() => {
+                    if (oldestSticker.parentNode) {
+                        oldestSticker.parentNode.removeChild(oldestSticker);
+                        stickerPositions.shift();
+                        stickerCount--;
+                    }
+                }, 500);
+            }
+            
             const sticker = document.createElement("div");
             sticker.className = "sticker";
             
@@ -823,9 +899,9 @@
             sticker.style.backgroundColor = color;
             
             if (pulseMode) {
-                sticker.style.animation = `float ${getRandom(4, 8)}s infinite ease-in-out, pulse 1.5s infinite ease-in-out`;
+                sticker.style.animation = `float ${getRandom(4, 8)}s infinite ease-in-out, pulse 1.5s infinite ease-in-out, glow 2s infinite ease-in-out`;
             } else {
-                sticker.style.animation = `float ${getRandom(8, 14)}s infinite ease-in-out`;
+                sticker.style.animation = `float ${getRandom(8, 14)}s infinite ease-in-out, glow 3s infinite ease-in-out`;
             }
             
             let fontSize;
@@ -880,13 +956,12 @@
             }
             
             if (!pulseMode) {
-                sticker.style.animationDuration = `${animationDuration}s`;
+                sticker.style.animationDuration = `${animationDuration}s, 3s`;
             }
             
             sticker.style.animationDelay = `${getRandom(0, 5)}s`;
             
             stickerCount++;
-            document.getElementById('count').textContent = stickerCount;
             
             sticker.addEventListener('click', function() {
                 this.style.transform = 'scale(0)';
@@ -901,7 +976,6 @@
                     if (this.parentNode) {
                         this.parentNode.removeChild(this);
                         stickerCount--;
-                        document.getElementById('count').textContent = stickerCount;
                     }
                 }, 500);
             });
@@ -927,8 +1001,6 @@
                         if (sticker.parentNode) {
                             sticker.parentNode.removeChild(sticker);
                             stickerCount--;
-                            document.getElementById('count').textContent = stickerCount;
-                            createSticker();
                         }
                     }, 500);
                 }
@@ -940,9 +1012,9 @@
             
             const heart = document.createElement('div');
             heart.className = 'heart';
-            heart.style.left = `${x - 10}px`;
-            heart.style.top = `${y - 10}px`;
-            heart.style.animation = `heartFloat 1s forwards`;
+            heart.style.left = `${x - 12}px`;
+            heart.style.top = `${y - 12}px`;
+            heart.style.animation = `heartFloat 1.2s forwards`;
             
             document.body.appendChild(heart);
             
@@ -950,7 +1022,7 @@
                 if (heart.parentNode) {
                     heart.parentNode.removeChild(heart);
                 }
-            }, 1000);
+            }, 1200);
         }
 
         function toggleTheme() {
@@ -960,15 +1032,15 @@
                 document.body.style.background = 'var(--background-dark)';
                 document.documentElement.style.setProperty('--text-dark', '#ecf0f1');
                 document.documentElement.style.setProperty('--text-light', '#4a5568');
-                document.documentElement.style.setProperty('--card-dark', 'rgba(44, 62, 80, 0.7)');
-                document.documentElement.style.setProperty('--card-light', 'rgba(255, 255, 255, 0.7)');
+                document.documentElement.style.setProperty('--card-dark', 'rgba(44, 62, 80, 0.85)');
+                document.documentElement.style.setProperty('--card-light', 'rgba(255, 255, 255, 0.85)');
                 document.querySelector('.theme-toggle').innerHTML = '<i class="fas fa-sun"></i> 日间模式';
             } else {
                 document.body.style.background = 'var(--background-light)';
                 document.documentElement.style.setProperty('--text-dark', '#4a5568');
                 document.documentElement.style.setProperty('--text-light', '#ecf0f1');
-                document.documentElement.style.setProperty('--card-dark', 'rgba(255, 255, 255, 0.7)');
-                document.documentElement.style.setProperty('--card-light', 'rgba(44, 62, 80, 0.7)');
+                document.documentElement.style.setProperty('--card-dark', 'rgba(255, 255, 255, 0.85)');
+                document.documentElement.style.setProperty('--card-light', 'rgba(44, 62, 80, 0.85)');
                 document.querySelector('.theme-toggle').innerHTML = '<i class="fas fa-moon"></i> 夜间模式';
             }
         }
@@ -1058,12 +1130,9 @@
             
             stickerPositions.length = 0;
             stickerCount = 0;
-            document.getElementById('count').textContent = stickerCount;
         }
 
         function updateSettingsDisplay() {
-            document.getElementById('countValue').textContent = settings.stickerCount;
-            
             let speedText;
             switch(settings.animationSpeed) {
                 case 1: speedText = '很慢'; break;
@@ -1103,6 +1172,7 @@
 
         function toggleRainbowMode() {
             rainbowMode = !rainbowMode;
+            document.getElementById('rainbowBtn').classList.toggle('active', rainbowMode);
             document.getElementById('rainbowBtn').innerHTML = rainbowMode ? '<i class="fas fa-palette"></i> 彩虹模式(开)' : '<i class="fas fa-palette"></i> 彩虹模式';
             showNotification(rainbowMode ? '彩虹模式已开启' : '彩虹模式已关闭');
             
@@ -1120,15 +1190,16 @@
 
         function togglePulseMode() {
             pulseMode = !pulseMode;
+            document.getElementById('pulseBtn').classList.toggle('active', pulseMode);
             document.getElementById('pulseBtn').innerHTML = pulseMode ? '<i class="fas fa-heartbeat"></i> 心跳模式(开)' : '<i class="fas fa-heartbeat"></i> 心跳模式';
             showNotification(pulseMode ? '心跳模式已开启' : '心跳模式已关闭');
             
             const stickers = document.querySelectorAll('.sticker');
             stickers.forEach(sticker => {
                 if (pulseMode) {
-                    sticker.style.animation = `float ${getRandom(4, 8)}s infinite ease-in-out, pulse 1.5s infinite ease-in-out`;
+                    sticker.style.animation = `float ${getRandom(4, 8)}s infinite ease-in-out, pulse 1.5s infinite ease-in-out, glow 2s infinite ease-in-out`;
                 } else {
-                    sticker.style.animation = `float ${getRandom(8, 14)}s infinite ease-in-out`;
+                    sticker.style.animation = `float ${getRandom(8, 14)}s infinite ease-in-out, glow 3s infinite ease-in-out`;
                 }
             });
         }
@@ -1151,7 +1222,6 @@
                             }
                             
                             stickerCount--;
-                            document.getElementById('count').textContent = stickerCount;
                         }
                     }, 500);
                 }, index * 50);
@@ -1162,7 +1232,7 @@
 
         function initMusic() {
             audio = new Audio();
-            audio.src = 'https://www.gequbao.com/music/1914980';
+            audio.src = 'https://sparkling-gold-gxfw6fxtns.edgeone.app/M500000aJXk23GxS91.mp3';
             audio.loop = true;
             
             document.getElementById('playBtn').addEventListener('click', function() {
@@ -1204,9 +1274,7 @@
             }
             
             autoGenerationInterval = setInterval(() => {
-                if (stickerCount < settings.stickerCount) {
-                    createSticker();
-                }
+                createSticker();
             }, 1000);
         }
 
@@ -1217,17 +1285,17 @@
             panel.style.display = 'block';
         });
         
+        document.getElementById('floatingSettingsBtn').addEventListener('click', function() {
+            const panel = document.getElementById('settingsPanel');
+            panel.style.display = 'block';
+        });
+        
         document.getElementById('closeSettings').addEventListener('click', function() {
             const panel = document.getElementById('settingsPanel');
             panel.style.display = 'none';
         });
         
         document.querySelector('.theme-toggle').addEventListener('click', toggleTheme);
-        
-        document.getElementById('stickerCount').addEventListener('input', function() {
-            settings.stickerCount = parseInt(this.value);
-            updateSettingsDisplay();
-        });
         
         document.getElementById('animationSpeed').addEventListener('input', function() {
             settings.animationSpeed = parseInt(this.value);
@@ -1259,6 +1327,10 @@
         document.getElementById('rainbowBtn').addEventListener('click', toggleRainbowMode);
         document.getElementById('pulseBtn').addEventListener('click', togglePulseMode);
         document.getElementById('explodeBtn').addEventListener('click', explodeStickers);
+        
+        document.getElementById('addStickerBtn').addEventListener('click', function() {
+            createSticker();
+        });
 
         document.getElementById('mobileMenuBtn').addEventListener('click', function() {
             document.getElementById('mobilePanel').style.display = 'flex';
@@ -1313,7 +1385,7 @@
         window.addEventListener('load', function() {
             updateSettingsDisplay();
             
-            initStickers(settings.stickerCount);
+            initStickers(2);
             
             createParticles();
             
