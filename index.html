@@ -480,7 +480,6 @@
             cursor: pointer;
         }
         
-        /* 响应式设计 */
         @media (max-width: 768px) {
             .title {
                 top: 10px;
@@ -525,36 +524,6 @@
             .mobile-menu, .mobile-panel {
                 display: none !important;
             }
-        }
-        
-        /* 标签生成区域 */
-        .generation-area {
-            position: absolute;
-            bottom: 100px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--card-dark);
-            padding: 10px 15px;
-            border-radius: 10px;
-            box-shadow: var(--shadow);
-            color: var(--text-dark);
-            z-index: 100;
-            backdrop-filter: blur(4px);
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            width: 250px;
-        }
-        
-        .generation-area h4 {
-            margin-bottom: 5px;
-            font-size: 1rem;
-        }
-        
-        .auto-generation {
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
         
         .toggle-switch {
@@ -647,10 +616,6 @@
             <input type="range" id="fontSize" min="1" max="5" value="3">
         </div>
         <div class="setting-item">
-            <label for="spawnRate">生成速度: <span id="rateValue">正常</span></label>
-            <input type="range" id="spawnRate" min="1" max="5" value="3">
-        </div>
-        <div class="setting-item">
             <label>
                 <input type="checkbox" id="enableParticles" checked> 启用粒子效果
             </label>
@@ -667,27 +632,10 @@
         </div>
     </div>
     
-    <div class="generation-area">
-        <h4>标签生成控制</h4>
-        <div class="auto-generation">
-            <span>自动生成:</span>
-            <label class="toggle-switch">
-                <input type="checkbox" id="autoGenerate" checked>
-                <span class="slider"></span>
-            </label>
-        </div>
-        <div class="setting-item">
-            <label for="generationRate">生成频率: <span id="generationRateValue">正常</span></label>
-            <input type="range" id="generationRate" min="1" max="5" value="3">
-        </div>
-    </div>
-    
     <div class="info-panel">
         <div class="sticker-counter">
             <span class="counter-icon"><i class="fas fa-tag"></i></span> 标签数量: <span id="count">0</span>
         </div>
-        <div>点击标签可移除</div>
-        <div>双击空白处添加标签</div>
     </div>
     
     <div class="music-player">
@@ -702,7 +650,6 @@
     <div class="notification" id="notification"></div>
 
     <script>
-        // 定义100条温暖的文字内容（已移除名人名字）
         const texts = [
             "你值得这世间，所有的美好。",
             "心若有所向往，何惧道阻且长。",
@@ -806,7 +753,6 @@
             "你应该被爱，也值得被爱。"
         ];
 
-        // 定义多种颜色
         const colors = [
             "rgba(255, 99, 132, 0.85)",
             "rgba(54, 162, 235, 0.85)",
@@ -819,56 +765,39 @@
             "rgba(40, 159, 64, 0.85)"
         ];
 
-        // 记录当前标签数量
         let stickerCount = 0;
-        
-        // 记录所有标签的位置和大小
         const stickerPositions = [];
-        
-        // 默认夜间模式
         let isNightMode = true;
-        
-        // 粒子效果
         let particles = [];
         let particleInterval;
         
-        // 设置
         let settings = {
             stickerCount: 15,
             animationSpeed: 3,
             fontSize: 3,
-            spawnRate: 3,
-            generationRate: 3,
             enableParticles: true,
             enableHearts: true,
-            enableMusic: true,
-            autoGenerate: true
+            enableMusic: true
         };
         
-        // 音乐
         let audio;
         let isPlaying = false;
         let musicInterval;
         
-        // 特效模式
         let rainbowMode = false;
         let pulseMode = false;
         
-        // 自动生成标签的计时器
         let autoGenerationInterval;
 
-        // 生成随机数的函数
         function getRandom(min, max) {
             return Math.random() * (max - min) + min;
         }
 
-        // 检查位置是否与现有标签重叠
         function isOverlapping(x, y, width, height) {
             for (const pos of stickerPositions) {
                 const dx = Math.abs(x - pos.x);
                 const dy = Math.abs(y - pos.y);
                 
-                // 如果两个标签中心点的距离小于它们的宽度和高度之和的一半，则认为重叠
                 if (dx < (width + pos.width) / 2 + 10 && dy < (height + pos.height) / 2 + 10) {
                     return true;
                 }
@@ -876,15 +805,12 @@
             return false;
         }
 
-        // 生成文字标签
         function createSticker() {
             const sticker = document.createElement("div");
             sticker.className = "sticker";
             
-            // 随机选择文字和颜色
             const text = texts[Math.floor(Math.random() * texts.length)];
             
-            // 彩虹模式特效
             let color;
             if (rainbowMode) {
                 const hue = Math.floor(getRandom(0, 360));
@@ -896,14 +822,12 @@
             sticker.textContent = text;
             sticker.style.backgroundColor = color;
             
-            // 心跳模式特效
             if (pulseMode) {
                 sticker.style.animation = `float ${getRandom(4, 8)}s infinite ease-in-out, pulse 1.5s infinite ease-in-out`;
             } else {
                 sticker.style.animation = `float ${getRandom(8, 14)}s infinite ease-in-out`;
             }
             
-            // 根据设置调整字体大小
             let fontSize;
             switch(settings.fontSize) {
                 case 1: fontSize = getRandom(12, 16); break;
@@ -915,12 +839,10 @@
             }
             sticker.style.fontSize = `${fontSize}px`;
             
-            // 先添加到DOM以获取实际尺寸
             document.body.appendChild(sticker);
             const width = sticker.offsetWidth;
             const height = sticker.offsetHeight;
             
-            // 寻找不重叠的位置
             let x, y;
             let attempts = 0;
             const maxAttempts = 50;
@@ -931,17 +853,14 @@
                 attempts++;
             } while (isOverlapping(x, y, width, height) && attempts < maxAttempts);
             
-            // 如果尝试次数过多，直接移除并返回
             if (attempts >= maxAttempts) {
                 document.body.removeChild(sticker);
                 return;
             }
             
-            // 设置位置
             sticker.style.left = `${x}%`;
             sticker.style.top = `${y}%`;
             
-            // 记录位置和尺寸
             stickerPositions.push({
                 x: x,
                 y: y,
@@ -950,7 +869,6 @@
                 element: sticker
             });
             
-            // 根据设置调整动画速度
             let animationDuration;
             switch(settings.animationSpeed) {
                 case 1: animationDuration = getRandom(12, 18); break;
@@ -967,16 +885,13 @@
             
             sticker.style.animationDelay = `${getRandom(0, 5)}s`;
             
-            // 更新计数
             stickerCount++;
             document.getElementById('count').textContent = stickerCount;
             
-            // 添加点击移除功能
             sticker.addEventListener('click', function() {
                 this.style.transform = 'scale(0)';
                 this.style.opacity = '0';
                 
-                // 从位置数组中移除
                 const index = stickerPositions.findIndex(pos => pos.element === this);
                 if (index !== -1) {
                     stickerPositions.splice(index, 1);
@@ -991,7 +906,6 @@
                 }, 500);
             });
             
-            // 添加右键菜单功能
             if (settings.enableHearts) {
                 sticker.addEventListener('contextmenu', function(e) {
                     e.preventDefault();
@@ -1000,12 +914,10 @@
                 });
             }
             
-            // 一段时间后自动移除并重新生成，保持动态
             setTimeout(() => {
                 if (sticker.parentNode) {
                     sticker.style.opacity = '0';
                     
-                    // 从位置数组中移除
                     const index = stickerPositions.findIndex(pos => pos.element === sticker);
                     if (index !== -1) {
                         stickerPositions.splice(index, 1);
@@ -1016,16 +928,13 @@
                             sticker.parentNode.removeChild(sticker);
                             stickerCount--;
                             document.getElementById('count').textContent = stickerCount;
-                            if (settings.autoGenerate) {
-                                createSticker();
-                            }
+                            createSticker();
                         }
                     }, 500);
                 }
             }, getRandom(15000, 25000));
         }
 
-        // 创建爱心效果
         function createHeart(x, y) {
             if (!settings.enableHearts) return;
             
@@ -1044,7 +953,6 @@
             }, 1000);
         }
 
-        // 切换主题模式
         function toggleTheme() {
             isNightMode = !isNightMode;
             
@@ -1065,7 +973,6 @@
             }
         }
 
-        // 创建粒子效果
         function createParticles() {
             if (!settings.enableParticles) return;
             
@@ -1098,7 +1005,6 @@
                 });
             }
             
-            // 更新粒子位置
             particleInterval = setInterval(() => {
                 if (!settings.enableParticles) {
                     clearInterval(particleInterval);
@@ -1109,7 +1015,6 @@
                     particle.x += particle.speedX;
                     particle.y += particle.speedY;
                     
-                    // 边界检查
                     if (particle.x < 0 || particle.x > 100) particle.speedX *= -1;
                     if (particle.y < 0 || particle.y > 100) particle.speedY *= -1;
                     
@@ -1119,7 +1024,6 @@
             }, 50);
         }
 
-        // 清除粒子效果
         function clearParticles() {
             particles.forEach(particle => {
                 if (particle.element.parentNode) {
@@ -1130,7 +1034,6 @@
             clearInterval(particleInterval);
         }
 
-        // 初始化标签
         function initStickers(count) {
             for (let i = 0; i < count; i++) {
                 setTimeout(() => {
@@ -1139,7 +1042,6 @@
             }
         }
 
-        // 清除所有标签
         function clearAllStickers() {
             const stickers = document.querySelectorAll('.sticker');
             stickers.forEach(sticker => {
@@ -1159,7 +1061,6 @@
             document.getElementById('count').textContent = stickerCount;
         }
 
-        // 更新设置显示
         function updateSettingsDisplay() {
             document.getElementById('countValue').textContent = settings.stickerCount;
             
@@ -1185,35 +1086,11 @@
             }
             document.getElementById('sizeValue').textContent = sizeText;
             
-            let rateText;
-            switch(settings.spawnRate) {
-                case 1: rateText = '很慢'; break;
-                case 2: rateText = '较慢'; break;
-                case 3: rateText = '正常'; break;
-                case 4: rateText = '较快'; break;
-                case 5: rateText = '很快'; break;
-                default: rateText = '正常';
-            }
-            document.getElementById('rateValue').textContent = rateText;
-            
-            let generationText;
-            switch(settings.generationRate) {
-                case 1: generationText = '很慢'; break;
-                case 2: generationText = '较慢'; break;
-                case 3: generationText = '正常'; break;
-                case 4: generationText = '较快'; break;
-                case 5: generationText = '很快'; break;
-                default: generationText = '正常';
-            }
-            document.getElementById('generationRateValue').textContent = generationText;
-            
             document.getElementById('enableParticles').checked = settings.enableParticles;
             document.getElementById('enableHearts').checked = settings.enableHearts;
             document.getElementById('enableMusic').checked = settings.enableMusic;
-            document.getElementById('autoGenerate').checked = settings.autoGenerate;
         }
 
-        // 显示通知
         function showNotification(message) {
             const notification = document.getElementById('notification');
             notification.textContent = message;
@@ -1224,13 +1101,11 @@
             }, 3000);
         }
 
-        // 切换彩虹模式
         function toggleRainbowMode() {
             rainbowMode = !rainbowMode;
             document.getElementById('rainbowBtn').innerHTML = rainbowMode ? '<i class="fas fa-palette"></i> 彩虹模式(开)' : '<i class="fas fa-palette"></i> 彩虹模式';
             showNotification(rainbowMode ? '彩虹模式已开启' : '彩虹模式已关闭');
             
-            // 更新所有现有标签的颜色
             const stickers = document.querySelectorAll('.sticker');
             stickers.forEach(sticker => {
                 if (rainbowMode) {
@@ -1243,13 +1118,11 @@
             });
         }
 
-        // 切换心跳模式
         function togglePulseMode() {
             pulseMode = !pulseMode;
             document.getElementById('pulseBtn').innerHTML = pulseMode ? '<i class="fas fa-heartbeat"></i> 心跳模式(开)' : '<i class="fas fa-heartbeat"></i> 心跳模式';
             showNotification(pulseMode ? '心跳模式已开启' : '心跳模式已关闭');
             
-            // 更新所有现有标签的动画
             const stickers = document.querySelectorAll('.sticker');
             stickers.forEach(sticker => {
                 if (pulseMode) {
@@ -1260,7 +1133,6 @@
             });
         }
 
-        // 爆炸效果
         function explodeStickers() {
             const stickers = document.querySelectorAll('.sticker');
             stickers.forEach((sticker, index) => {
@@ -1273,7 +1145,6 @@
                         if (sticker.parentNode) {
                             sticker.parentNode.removeChild(sticker);
                             
-                            // 从位置数组中移除
                             const posIndex = stickerPositions.findIndex(pos => pos.element === sticker);
                             if (posIndex !== -1) {
                                 stickerPositions.splice(posIndex, 1);
@@ -1289,15 +1160,11 @@
             showNotification('爆炸效果！所有标签已清除');
         }
 
-        // 初始化音乐
         function initMusic() {
-            // 创建一个音频元素
             audio = new Audio();
-            // 使用一个免费的音乐资源
-            audio.src = 'https://assets.mixkit.co/music/preview/mixkit-tech-house-vibes-130.mp3';
+            audio.src = 'https://www.gequbao.com/music/1914980';
             audio.loop = true;
             
-            // 播放按钮事件
             document.getElementById('playBtn').addEventListener('click', function() {
                 if (settings.enableMusic) {
                     audio.play();
@@ -1306,14 +1173,12 @@
                 }
             });
             
-            // 暂停按钮事件
             document.getElementById('pauseBtn').addEventListener('click', function() {
                 audio.pause();
                 isPlaying = false;
                 clearInterval(musicInterval);
             });
             
-            // 更新音乐进度
             function updateMusicProgress() {
                 if (isPlaying) {
                     const progress = document.getElementById('musicProgress');
@@ -1324,7 +1189,6 @@
                             const percent = (audio.currentTime / audio.duration) * 100;
                             progress.style.width = percent + '%';
                             
-                            // 更新时间显示
                             const minutes = Math.floor(audio.currentTime / 60);
                             const seconds = Math.floor(audio.currentTime % 60);
                             timeDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
@@ -1334,33 +1198,18 @@
             }
         }
 
-        // 设置自动生成标签
         function setupAutoGeneration() {
-            // 根据生成速度设置标签生成间隔
-            let spawnInterval;
-            switch(settings.generationRate) {
-                case 1: spawnInterval = 8000; break;
-                case 2: spawnInterval = 6000; break;
-                case 3: spawnInterval = 4000; break;
-                case 4: spawnInterval = 2000; break;
-                case 5: spawnInterval = 1000; break;
-                default: spawnInterval = 4000;
-            }
-            
-            // 清除之前的计时器
             if (autoGenerationInterval) {
                 clearInterval(autoGenerationInterval);
             }
             
-            // 设置新的计时器
             autoGenerationInterval = setInterval(() => {
-                if (settings.autoGenerate && stickerCount < settings.stickerCount) {
+                if (stickerCount < settings.stickerCount) {
                     createSticker();
                 }
-            }, spawnInterval);
+            }, 1000);
         }
 
-        // 事件监听
         document.getElementById('clearBtn').addEventListener('click', clearAllStickers);
         
         document.getElementById('settingsBtn').addEventListener('click', function() {
@@ -1375,7 +1224,6 @@
         
         document.querySelector('.theme-toggle').addEventListener('click', toggleTheme);
         
-        // 设置变化监听
         document.getElementById('stickerCount').addEventListener('input', function() {
             settings.stickerCount = parseInt(this.value);
             updateSettingsDisplay();
@@ -1389,17 +1237,6 @@
         document.getElementById('fontSize').addEventListener('input', function() {
             settings.fontSize = parseInt(this.value);
             updateSettingsDisplay();
-        });
-        
-        document.getElementById('spawnRate').addEventListener('input', function() {
-            settings.spawnRate = parseInt(this.value);
-            updateSettingsDisplay();
-        });
-        
-        document.getElementById('generationRate').addEventListener('input', function() {
-            settings.generationRate = parseInt(this.value);
-            updateSettingsDisplay();
-            setupAutoGeneration();
         });
         
         document.getElementById('enableParticles').addEventListener('change', function() {
@@ -1419,21 +1256,10 @@
             settings.enableMusic = this.checked;
         });
         
-        document.getElementById('autoGenerate').addEventListener('change', function() {
-            settings.autoGenerate = this.checked;
-            if (settings.autoGenerate) {
-                setupAutoGeneration();
-            } else {
-                clearInterval(autoGenerationInterval);
-            }
-        });
-        
-        // 特效按钮事件
         document.getElementById('rainbowBtn').addEventListener('click', toggleRainbowMode);
         document.getElementById('pulseBtn').addEventListener('click', togglePulseMode);
         document.getElementById('explodeBtn').addEventListener('click', explodeStickers);
 
-        // 移动端按钮事件
         document.getElementById('mobileMenuBtn').addEventListener('click', function() {
             document.getElementById('mobilePanel').style.display = 'flex';
         });
@@ -1472,12 +1298,10 @@
             document.getElementById('mobilePanel').style.display = 'none';
         });
 
-        // 双击创建标签
         document.addEventListener('dblclick', function(e) {
             createSticker();
         });
 
-        // 页面可见性变化
         document.addEventListener('visibilitychange', function() {
             if (document.hidden) {
                 document.title = "你不想理我了吗(╥﹏╥)";
@@ -1486,21 +1310,15 @@
             }
         });
 
-        // 页面加载时初始化
         window.addEventListener('load', function() {
-            // 初始化设置显示
             updateSettingsDisplay();
             
-            // 初始创建标签
             initStickers(settings.stickerCount);
             
-            // 创建粒子效果
             createParticles();
             
-            // 设置自动生成标签
             setupAutoGeneration();
             
-            // 初始化音乐
             initMusic();
         });
     </script>
