@@ -978,7 +978,7 @@
             return Math.random() * (max - min) + min;
         }
 
-        // 创建标签 - 完全重写的版本
+        // 创建标签 - 修复版本
         function createSticker(text = null) {
             // 如果标签数量达到上限，删除最旧的标签
             if (stickerCount >= settings.maxStickers) {
@@ -1075,6 +1075,8 @@
                 sticker.style.cursor = 'move';
                 setupDraggableSticker(sticker);
             }
+            
+            return sticker;
         }
 
         // 删除最早标签
@@ -1194,7 +1196,7 @@
                 document.documentElement.style.setProperty('--text-dark', '#4a5568');
                 document.documentElement.style.setProperty('--text-light', '#ecf0f1');
                 document.documentElement.style.setProperty('--card-dark', 'rgba(255, 255, 255, 0.85)');
-                document.documentElement.style.setProperty('--card-light', 'rgba(44, 62, 80, 0.85)';
+                document.documentElement.style.setProperty('--card-light', 'rgba(44, 62, 80, 0.85)');
                 document.querySelector('.theme-toggle').innerHTML = '<i class="fas fa-moon"></i> 夜间模式';
             }
             
