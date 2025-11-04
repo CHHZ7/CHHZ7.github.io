@@ -84,6 +84,9 @@
             text-overflow: ellipsis;
             border: 1px solid rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(8px);
+            max-width: 300px;
+            white-space: normal;
+            word-break: break-word;
         }
         
         .sticker:hover {
@@ -218,7 +221,7 @@
             color: var(--text-dark);
             z-index: 100;
             backdrop-filter: blur(12px);
-            width: 240px;
+            width: 280px;
             display: none;
             border: 1px solid rgba(255, 255, 255, 0.1);
             max-height: 80vh;
@@ -638,6 +641,97 @@
         .floating-btn i {
             font-size: 1.2rem;
         }
+        
+        /* 新增样式 */
+        .custom-text-input {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--card-dark);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            z-index: 1000;
+            backdrop-filter: blur(12px);
+            width: 90%;
+            max-width: 400px;
+            display: none;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .custom-text-input h3 {
+            margin-bottom: 15px;
+            color: var(--accent-color);
+        }
+        
+        .custom-text-input textarea {
+            width: 100%;
+            height: 120px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--border-radius);
+            padding: 12px;
+            color: var(--text-dark);
+            font-family: inherit;
+            resize: none;
+            margin-bottom: 15px;
+        }
+        
+        .custom-text-input textarea::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .custom-text-input .buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        
+        .custom-text-input button {
+            background: var(--primary-color);
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .custom-text-input button:hover {
+            background: #2980b9;
+        }
+        
+        .custom-text-input button.cancel {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .custom-text-input button.cancel:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .sticker-count {
+            position: absolute;
+            bottom: 80px;
+            right: 20px;
+            background: var(--card-dark);
+            padding: 8px 16px;
+            border-radius: var(--border-radius);
+            color: var(--text-dark);
+            font-size: 0.9rem;
+            z-index: 100;
+            backdrop-filter: blur(12px);
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .edit-mode .sticker {
+            cursor: move;
+        }
+        
+        .edit-mode .sticker:hover {
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.4);
+        }
     </style>
 </head>
 <body>
@@ -647,6 +741,8 @@
     <div class="controls">
         <button class="control-btn" id="clearBtn"><i class="fas fa-trash"></i> 清除标签</button>
         <button class="control-btn" id="settingsBtn"><i class="fas fa-cog"></i> 设置</button>
+        <button class="control-btn" id="customTextBtn"><i class="fas fa-edit"></i> 自定义标签</button>
+        <button class="control-btn" id="editModeBtn"><i class="fas fa-hand-paper"></i> 编辑模式</button>
     </div>
     
     <div class="effect-buttons">
@@ -663,6 +759,7 @@
         <button class="close-mobile" id="closeMobile"><i class="fas fa-times"></i></button>
         <button id="mobileClearBtn"><i class="fas fa-trash"></i> 清除标签</button>
         <button id="mobileSettingsBtn"><i class="fas fa-cog"></i> 设置</button>
+        <button id="mobileCustomTextBtn"><i class="fas fa-edit"></i> 自定义标签</button>
         <button id="mobileRainbowBtn"><i class="fas fa-palette"></i> 彩虹模式</button>
         <button id="mobilePulseBtn"><i class="fas fa-heartbeat"></i> 心跳模式</button>
         <button id="mobileExplodeBtn"><i class="fas fa-bomb"></i> 爆炸效果</button>
@@ -680,6 +777,10 @@
             <input type="range" id="fontSize" min="1" max="5" value="3">
         </div>
         <div class="setting-item">
+            <label for="maxStickers">最大标签数: <span id="maxStickersValue">100</span></label>
+            <input type="range" id="maxStickers" min="10" max="100" value="100">
+        </div>
+        <div class="setting-item">
             <label>
                 <input type="checkbox" id="enableParticles" checked> 启用粒子效果
             </label>
@@ -694,12 +795,28 @@
                 <input type="checkbox" id="enableMusic" checked> 启用背景音乐
             </label>
         </div>
+        <div class="setting-item">
+            <label>
+                <input type="checkbox" id="enableStorage"> 保存设置和标签
+            </label>
+        </div>
+    </div>
+    
+    <div class="custom-text-input" id="customTextInput">
+        <h3>添加自定义标签</h3>
+        <textarea id="customTextArea" placeholder="请输入你想要显示的文本..."></textarea>
+        <div class="buttons">
+            <button class="cancel" id="cancelCustomText">取消</button>
+            <button id="saveCustomText">添加</button>
+        </div>
     </div>
     
     <div class="floating-controls">
         <button class="floating-btn" id="addStickerBtn"><i class="fas fa-plus"></i></button>
         <button class="floating-btn" id="floatingSettingsBtn"><i class="fas fa-cog"></i></button>
     </div>
+    
+    <div class="sticker-count" id="stickerCount">标签: 0/100</div>
     
     <div class="music-player">
         <button class="music-btn" id="playBtn"><i class="fas fa-play"></i></button>
@@ -713,6 +830,7 @@
     <div class="notification" id="notification"></div>
 
     <script>
+        // 励志文本数组
         const texts = [
             "你值得这世间，所有的美好。",
             "心若有所向往，何惧道阻且长。",
@@ -828,18 +946,24 @@
             "rgba(40, 159, 64, 0.85)"
         ];
 
+        // 全局变量
         let stickerCount = 0;
         const stickerPositions = [];
         let isNightMode = true;
         let particles = [];
         let particleInterval;
+        let isEditMode = false;
+        let draggedSticker = null;
         
+        // 设置对象
         let settings = {
             animationSpeed: 3,
             fontSize: 3,
+            maxStickers: 100,
             enableParticles: true,
             enableHearts: true,
-            enableMusic: true
+            enableMusic: true,
+            enableStorage: false
         };
         
         let audio;
@@ -851,6 +975,7 @@
         
         let autoGenerationInterval;
 
+        // 辅助函数
         function getRandom(min, max) {
             return Math.random() * (max - min) + min;
         }
@@ -867,8 +992,10 @@
             return false;
         }
 
-        function createSticker() {
-            if (stickerCount >= 2) {
+        // 创建标签
+        function createSticker(text = null) {
+            // 如果标签数量达到上限，删除最旧的标签
+            if (stickerCount >= settings.maxStickers) {
                 const oldestSticker = stickerPositions[0].element;
                 oldestSticker.style.transform = 'scale(0)';
                 oldestSticker.style.opacity = '0';
@@ -878,6 +1005,7 @@
                         oldestSticker.parentNode.removeChild(oldestSticker);
                         stickerPositions.shift();
                         stickerCount--;
+                        updateStickerCount();
                     }
                 }, 500);
             }
@@ -885,7 +1013,8 @@
             const sticker = document.createElement("div");
             sticker.className = "sticker";
             
-            const text = texts[Math.floor(Math.random() * texts.length)];
+            // 使用提供的文本或随机文本
+            const stickerText = text || texts[Math.floor(Math.random() * texts.length)];
             
             let color;
             if (rainbowMode) {
@@ -895,7 +1024,7 @@
                 color = colors[Math.floor(Math.random() * colors.length)];
             }
             
-            sticker.textContent = text;
+            sticker.textContent = stickerText;
             sticker.style.backgroundColor = color;
             
             if (pulseMode) {
@@ -904,6 +1033,7 @@
                 sticker.style.animation = `float ${getRandom(8, 14)}s infinite ease-in-out, glow 3s infinite ease-in-out`;
             }
             
+            // 设置字体大小
             let fontSize;
             switch(settings.fontSize) {
                 case 1: fontSize = getRandom(12, 16); break;
@@ -919,6 +1049,7 @@
             const width = sticker.offsetWidth;
             const height = sticker.offsetHeight;
             
+            // 寻找不重叠的位置
             let x, y;
             let attempts = 0;
             const maxAttempts = 50;
@@ -945,6 +1076,7 @@
                 element: sticker
             });
             
+            // 设置动画持续时间
             let animationDuration;
             switch(settings.animationSpeed) {
                 case 1: animationDuration = getRandom(12, 18); break;
@@ -962,8 +1094,12 @@
             sticker.style.animationDelay = `${getRandom(0, 5)}s`;
             
             stickerCount++;
+            updateStickerCount();
             
+            // 点击事件
             sticker.addEventListener('click', function() {
+                if (isEditMode) return;
+                
                 this.style.transform = 'scale(0)';
                 this.style.opacity = '0';
                 
@@ -976,10 +1112,12 @@
                     if (this.parentNode) {
                         this.parentNode.removeChild(this);
                         stickerCount--;
+                        updateStickerCount();
                     }
                 }, 500);
             });
             
+            // 右键点击事件
             if (settings.enableHearts) {
                 sticker.addEventListener('contextmenu', function(e) {
                     e.preventDefault();
@@ -988,6 +1126,13 @@
                 });
             }
             
+            // 编辑模式下的拖拽功能
+            if (isEditMode) {
+                sticker.style.cursor = 'move';
+                setupDraggableSticker(sticker);
+            }
+            
+            // 自动消失
             setTimeout(() => {
                 if (sticker.parentNode) {
                     sticker.style.opacity = '0';
@@ -1001,12 +1146,77 @@
                         if (sticker.parentNode) {
                             sticker.parentNode.removeChild(sticker);
                             stickerCount--;
+                            updateStickerCount();
                         }
                     }, 500);
                 }
             }, getRandom(15000, 25000));
         }
 
+        // 更新标签计数显示
+        function updateStickerCount() {
+            document.getElementById('stickerCount').textContent = `标签: ${stickerCount}/${settings.maxStickers}`;
+        }
+
+        // 设置可拖拽标签
+        function setupDraggableSticker(sticker) {
+            sticker.addEventListener('mousedown', startDrag);
+            sticker.addEventListener('touchstart', startDrag, { passive: false });
+            
+            function startDrag(e) {
+                if (!isEditMode) return;
+                
+                e.preventDefault();
+                draggedSticker = sticker;
+                
+                const startX = e.clientX || e.touches[0].clientX;
+                const startY = e.clientY || e.touches[0].clientY;
+                const startLeft = parseFloat(sticker.style.left);
+                const startTop = parseFloat(sticker.style.top);
+                
+                function onDrag(e) {
+                    if (!draggedSticker) return;
+                    
+                    const currentX = e.clientX || e.touches[0].clientX;
+                    const currentY = e.clientY || e.touches[0].clientY;
+                    
+                    const deltaX = (currentX - startX) / window.innerWidth * 100;
+                    const deltaY = (currentY - startY) / window.innerHeight * 100;
+                    
+                    let newLeft = startLeft + deltaX;
+                    let newTop = startTop + deltaY;
+                    
+                    // 限制在屏幕范围内
+                    newLeft = Math.max(0, Math.min(95, newLeft));
+                    newTop = Math.max(0, Math.min(95, newTop));
+                    
+                    sticker.style.left = `${newLeft}%`;
+                    sticker.style.top = `${newTop}%`;
+                    
+                    // 更新位置数据
+                    const index = stickerPositions.findIndex(pos => pos.element === sticker);
+                    if (index !== -1) {
+                        stickerPositions[index].x = newLeft;
+                        stickerPositions[index].y = newTop;
+                    }
+                }
+                
+                function stopDrag() {
+                    document.removeEventListener('mousemove', onDrag);
+                    document.removeEventListener('touchmove', onDrag);
+                    document.removeEventListener('mouseup', stopDrag);
+                    document.removeEventListener('touchend', stopDrag);
+                    draggedSticker = null;
+                }
+                
+                document.addEventListener('mousemove', onDrag);
+                document.addEventListener('touchmove', onDrag, { passive: false });
+                document.addEventListener('mouseup', stopDrag);
+                document.addEventListener('touchend', stopDrag);
+            }
+        }
+
+        // 创建心形动画
         function createHeart(x, y) {
             if (!settings.enableHearts) return;
             
@@ -1025,6 +1235,7 @@
             }, 1200);
         }
 
+        // 切换主题
         function toggleTheme() {
             isNightMode = !isNightMode;
             
@@ -1043,8 +1254,11 @@
                 document.documentElement.style.setProperty('--card-light', 'rgba(44, 62, 80, 0.85)');
                 document.querySelector('.theme-toggle').innerHTML = '<i class="fas fa-moon"></i> 夜间模式';
             }
+            
+            saveSettings();
         }
 
+        // 创建粒子效果
         function createParticles() {
             if (!settings.enableParticles) return;
             
@@ -1096,6 +1310,7 @@
             }, 50);
         }
 
+        // 清除粒子
         function clearParticles() {
             particles.forEach(particle => {
                 if (particle.element.parentNode) {
@@ -1106,6 +1321,7 @@
             clearInterval(particleInterval);
         }
 
+        // 初始化标签
         function initStickers(count) {
             for (let i = 0; i < count; i++) {
                 setTimeout(() => {
@@ -1114,6 +1330,7 @@
             }
         }
 
+        // 清除所有标签
         function clearAllStickers() {
             const stickers = document.querySelectorAll('.sticker');
             stickers.forEach(sticker => {
@@ -1130,8 +1347,10 @@
             
             stickerPositions.length = 0;
             stickerCount = 0;
+            updateStickerCount();
         }
 
+        // 更新设置显示
         function updateSettingsDisplay() {
             let speedText;
             switch(settings.animationSpeed) {
@@ -1155,11 +1374,15 @@
             }
             document.getElementById('sizeValue').textContent = sizeText;
             
+            document.getElementById('maxStickersValue').textContent = settings.maxStickers;
+            
             document.getElementById('enableParticles').checked = settings.enableParticles;
             document.getElementById('enableHearts').checked = settings.enableHearts;
             document.getElementById('enableMusic').checked = settings.enableMusic;
+            document.getElementById('enableStorage').checked = settings.enableStorage;
         }
 
+        // 显示通知
         function showNotification(message) {
             const notification = document.getElementById('notification');
             notification.textContent = message;
@@ -1170,6 +1393,7 @@
             }, 3000);
         }
 
+        // 切换彩虹模式
         function toggleRainbowMode() {
             rainbowMode = !rainbowMode;
             document.getElementById('rainbowBtn').classList.toggle('active', rainbowMode);
@@ -1188,6 +1412,7 @@
             });
         }
 
+        // 切换心跳模式
         function togglePulseMode() {
             pulseMode = !pulseMode;
             document.getElementById('pulseBtn').classList.toggle('active', pulseMode);
@@ -1204,6 +1429,7 @@
             });
         }
 
+        // 爆炸效果
         function explodeStickers() {
             const stickers = document.querySelectorAll('.sticker');
             stickers.forEach((sticker, index) => {
@@ -1222,6 +1448,7 @@
                             }
                             
                             stickerCount--;
+                            updateStickerCount();
                         }
                     }, 500);
                 }, index * 50);
@@ -1230,25 +1457,34 @@
             showNotification('爆炸效果！所有标签已清除');
         }
 
+        // 初始化音乐播放器
         function initMusic() {
+            // 创建音频元素
             audio = new Audio();
-            audio.src = 'https://sparkling-gold-gxfw6fxtns.edgeone.app/M500000aJXk23GxS91.mp3';
+            // 使用一个可靠的音乐源
+            audio.src = 'https://music.163.com/song/media/outer/url?id=186721.mp3';
             audio.loop = true;
             
+            // 播放按钮事件
             document.getElementById('playBtn').addEventListener('click', function() {
                 if (settings.enableMusic) {
-                    audio.play();
+                    audio.play().catch(e => {
+                        console.log("音乐播放失败:", e);
+                        showNotification("音乐播放失败，请检查网络或更换音乐源");
+                    });
                     isPlaying = true;
                     updateMusicProgress();
                 }
             });
             
+            // 暂停按钮事件
             document.getElementById('pauseBtn').addEventListener('click', function() {
                 audio.pause();
                 isPlaying = false;
                 clearInterval(musicInterval);
             });
             
+            // 更新音乐进度
             function updateMusicProgress() {
                 if (isPlaying) {
                     const progress = document.getElementById('musicProgress');
@@ -1266,8 +1502,19 @@
                     }, 100);
                 }
             }
+            
+            // 音频加载事件
+            audio.addEventListener('canplaythrough', function() {
+                console.log("音乐已加载完成");
+            });
+            
+            audio.addEventListener('error', function(e) {
+                console.log("音乐加载错误:", e);
+                showNotification("音乐加载失败，请检查网络连接");
+            });
         }
 
+        // 设置自动生成
         function setupAutoGeneration() {
             if (autoGenerationInterval) {
                 clearInterval(autoGenerationInterval);
@@ -1275,123 +1522,243 @@
             
             autoGenerationInterval = setInterval(() => {
                 createSticker();
-            }, 1000);
+            }, 2000);
         }
 
-        document.getElementById('clearBtn').addEventListener('click', clearAllStickers);
-        
-        document.getElementById('settingsBtn').addEventListener('click', function() {
-            const panel = document.getElementById('settingsPanel');
-            panel.style.display = 'block';
-        });
-        
-        document.getElementById('floatingSettingsBtn').addEventListener('click', function() {
-            const panel = document.getElementById('settingsPanel');
-            panel.style.display = 'block';
-        });
-        
-        document.getElementById('closeSettings').addEventListener('click', function() {
-            const panel = document.getElementById('settingsPanel');
-            panel.style.display = 'none';
-        });
-        
-        document.querySelector('.theme-toggle').addEventListener('click', toggleTheme);
-        
-        document.getElementById('animationSpeed').addEventListener('input', function() {
-            settings.animationSpeed = parseInt(this.value);
-            updateSettingsDisplay();
-        });
-        
-        document.getElementById('fontSize').addEventListener('input', function() {
-            settings.fontSize = parseInt(this.value);
-            updateSettingsDisplay();
-        });
-        
-        document.getElementById('enableParticles').addEventListener('change', function() {
-            settings.enableParticles = this.checked;
-            if (settings.enableParticles) {
-                createParticles();
+        // 切换编辑模式
+        function toggleEditMode() {
+            isEditMode = !isEditMode;
+            document.body.classList.toggle('edit-mode', isEditMode);
+            
+            const editBtn = document.getElementById('editModeBtn');
+            editBtn.innerHTML = isEditMode ? 
+                '<i class="fas fa-hand-paper"></i> 编辑模式(开)' : 
+                '<i class="fas fa-hand-paper"></i> 编辑模式';
+            editBtn.classList.toggle('active', isEditMode);
+            
+            showNotification(isEditMode ? '编辑模式已开启' : '编辑模式已关闭');
+            
+            // 更新所有标签的拖拽状态
+            const stickers = document.querySelectorAll('.sticker');
+            stickers.forEach(sticker => {
+                if (isEditMode) {
+                    sticker.style.cursor = 'move';
+                    setupDraggableSticker(sticker);
+                } else {
+                    sticker.style.cursor = 'pointer';
+                    // 移除拖拽事件监听器
+                    sticker.removeEventListener('mousedown', startDrag);
+                    sticker.removeEventListener('touchstart', startDrag);
+                }
+            });
+        }
+
+        // 显示自定义文本输入框
+        function showCustomTextInput() {
+            document.getElementById('customTextInput').style.display = 'block';
+            document.getElementById('customTextArea').focus();
+        }
+
+        // 隐藏自定义文本输入框
+        function hideCustomTextInput() {
+            document.getElementById('customTextInput').style.display = 'none';
+            document.getElementById('customTextArea').value = '';
+        }
+
+        // 保存自定义文本
+        function saveCustomText() {
+            const text = document.getElementById('customTextArea').value.trim();
+            if (text) {
+                createSticker(text);
+                hideCustomTextInput();
+                showNotification('自定义标签已添加');
             } else {
-                clearParticles();
+                showNotification('请输入文本内容');
             }
-        });
-        
-        document.getElementById('enableHearts').addEventListener('change', function() {
-            settings.enableHearts = this.checked;
-        });
-        
-        document.getElementById('enableMusic').addEventListener('change', function() {
-            settings.enableMusic = this.checked;
-        });
-        
-        document.getElementById('rainbowBtn').addEventListener('click', toggleRainbowMode);
-        document.getElementById('pulseBtn').addEventListener('click', togglePulseMode);
-        document.getElementById('explodeBtn').addEventListener('click', explodeStickers);
-        
-        document.getElementById('addStickerBtn').addEventListener('click', function() {
-            createSticker();
-        });
+        }
 
-        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
-            document.getElementById('mobilePanel').style.display = 'flex';
-        });
-        
-        document.getElementById('closeMobile').addEventListener('click', function() {
-            document.getElementById('mobilePanel').style.display = 'none';
-        });
-        
-        document.getElementById('mobileClearBtn').addEventListener('click', function() {
-            clearAllStickers();
-            document.getElementById('mobilePanel').style.display = 'none';
-        });
-        
-        document.getElementById('mobileSettingsBtn').addEventListener('click', function() {
-            document.getElementById('settingsPanel').style.display = 'block';
-            document.getElementById('mobilePanel').style.display = 'none';
-        });
-        
-        document.getElementById('mobileRainbowBtn').addEventListener('click', function() {
-            toggleRainbowMode();
-            document.getElementById('mobilePanel').style.display = 'none';
-        });
-        
-        document.getElementById('mobilePulseBtn').addEventListener('click', function() {
-            togglePulseMode();
-            document.getElementById('mobilePanel').style.display = 'none';
-        });
-        
-        document.getElementById('mobileExplodeBtn').addEventListener('click', function() {
-            explodeStickers();
-            document.getElementById('mobilePanel').style.display = 'none';
-        });
-        
-        document.getElementById('mobileThemeBtn').addEventListener('click', function() {
-            toggleTheme();
-            document.getElementById('mobilePanel').style.display = 'none';
-        });
-
-        document.addEventListener('dblclick', function(e) {
-            createSticker();
-        });
-
-        document.addEventListener('visibilitychange', function() {
-            if (document.hidden) {
-                document.title = "你不想理我了吗(╥﹏╥)";
-            } else {
-                document.title = "灰原什么的最可爱了(●'◡'●)";
+        // 保存设置到本地存储
+        function saveSettings() {
+            if (settings.enableStorage) {
+                localStorage.setItem('stickerSettings', JSON.stringify(settings));
+                localStorage.setItem('isNightMode', isNightMode);
             }
-        });
+        }
 
+        // 从本地存储加载设置
+        function loadSettings() {
+            const savedSettings = localStorage.getItem('stickerSettings');
+            const savedTheme = localStorage.getItem('isNightMode');
+            
+            if (savedSettings) {
+                settings = JSON.parse(savedSettings);
+            }
+            
+            if (savedTheme !== null) {
+                isNightMode = savedTheme === 'true';
+                if (!isNightMode) {
+                    toggleTheme(); // 切换到日间模式
+                }
+            }
+        }
+
+        // 初始化事件监听器
+        function initEventListeners() {
+            document.getElementById('clearBtn').addEventListener('click', clearAllStickers);
+            
+            document.getElementById('settingsBtn').addEventListener('click', function() {
+                const panel = document.getElementById('settingsPanel');
+                panel.style.display = 'block';
+            });
+            
+            document.getElementById('floatingSettingsBtn').addEventListener('click', function() {
+                const panel = document.getElementById('settingsPanel');
+                panel.style.display = 'block';
+            });
+            
+            document.getElementById('closeSettings').addEventListener('click', function() {
+                const panel = document.getElementById('settingsPanel');
+                panel.style.display = 'none';
+                saveSettings();
+            });
+            
+            document.querySelector('.theme-toggle').addEventListener('click', toggleTheme);
+            
+            document.getElementById('animationSpeed').addEventListener('input', function() {
+                settings.animationSpeed = parseInt(this.value);
+                updateSettingsDisplay();
+            });
+            
+            document.getElementById('fontSize').addEventListener('input', function() {
+                settings.fontSize = parseInt(this.value);
+                updateSettingsDisplay();
+            });
+            
+            document.getElementById('maxStickers').addEventListener('input', function() {
+                settings.maxStickers = parseInt(this.value);
+                updateSettingsDisplay();
+                updateStickerCount();
+            });
+            
+            document.getElementById('enableParticles').addEventListener('change', function() {
+                settings.enableParticles = this.checked;
+                if (settings.enableParticles) {
+                    createParticles();
+                } else {
+                    clearParticles();
+                }
+            });
+            
+            document.getElementById('enableHearts').addEventListener('change', function() {
+                settings.enableHearts = this.checked;
+            });
+            
+            document.getElementById('enableMusic').addEventListener('change', function() {
+                settings.enableMusic = this.checked;
+            });
+            
+            document.getElementById('enableStorage').addEventListener('change', function() {
+                settings.enableStorage = this.checked;
+                saveSettings();
+            });
+            
+            document.getElementById('rainbowBtn').addEventListener('click', toggleRainbowMode);
+            document.getElementById('pulseBtn').addEventListener('click', togglePulseMode);
+            document.getElementById('explodeBtn').addEventListener('click', explodeStickers);
+            
+            document.getElementById('addStickerBtn').addEventListener('click', function() {
+                createSticker();
+            });
+
+            document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+                document.getElementById('mobilePanel').style.display = 'flex';
+            });
+            
+            document.getElementById('closeMobile').addEventListener('click', function() {
+                document.getElementById('mobilePanel').style.display = 'none';
+            });
+            
+            document.getElementById('mobileClearBtn').addEventListener('click', function() {
+                clearAllStickers();
+                document.getElementById('mobilePanel').style.display = 'none';
+            });
+            
+            document.getElementById('mobileSettingsBtn').addEventListener('click', function() {
+                document.getElementById('settingsPanel').style.display = 'block';
+                document.getElementById('mobilePanel').style.display = 'none';
+            });
+            
+            document.getElementById('mobileRainbowBtn').addEventListener('click', function() {
+                toggleRainbowMode();
+                document.getElementById('mobilePanel').style.display = 'none';
+            });
+            
+            document.getElementById('mobilePulseBtn').addEventListener('click', function() {
+                togglePulseMode();
+                document.getElementById('mobilePanel').style.display = 'none';
+            });
+            
+            document.getElementById('mobileExplodeBtn').addEventListener('click', function() {
+                explodeStickers();
+                document.getElementById('mobilePanel').style.display = 'none';
+            });
+            
+            document.getElementById('mobileThemeBtn').addEventListener('click', function() {
+                toggleTheme();
+                document.getElementById('mobilePanel').style.display = 'none';
+            });
+            
+            document.getElementById('mobileCustomTextBtn').addEventListener('click', function() {
+                showCustomTextInput();
+                document.getElementById('mobilePanel').style.display = 'none';
+            });
+
+            // 自定义文本功能
+            document.getElementById('customTextBtn').addEventListener('click', showCustomTextInput);
+            document.getElementById('cancelCustomText').addEventListener('click', hideCustomTextInput);
+            document.getElementById('saveCustomText').addEventListener('click', saveCustomText);
+            
+            // 编辑模式
+            document.getElementById('editModeBtn').addEventListener('click', toggleEditMode);
+
+            // 双击创建标签
+            document.addEventListener('dblclick', function(e) {
+                if (e.target.classList.contains('sticker')) return;
+                createSticker();
+            });
+
+            // 页面可见性变化
+            document.addEventListener('visibilitychange', function() {
+                if (document.hidden) {
+                    document.title = "你不想理我了吗(╥﹏╥)";
+                } else {
+                    document.title = "灰原什么的最可爱了(●'◡'●)";
+                }
+            });
+        }
+
+        // 页面加载完成后的初始化
         window.addEventListener('load', function() {
+            // 加载设置
+            loadSettings();
+            
+            // 更新设置显示
             updateSettingsDisplay();
             
-            initStickers(2);
+            // 初始化标签
+            initStickers(5);
             
+            // 创建粒子效果
             createParticles();
             
+            // 设置自动生成
             setupAutoGeneration();
             
+            // 初始化音乐
             initMusic();
+            
+            // 初始化事件监听器
+            initEventListeners();
         });
     </script>
 </body>
