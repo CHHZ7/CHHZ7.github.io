@@ -87,6 +87,7 @@
             max-width: 300px;
             white-space: normal;
             word-break: break-word;
+            animation: float 10s infinite ease-in-out, glow 3s infinite ease-in-out;
         }
         
         .sticker:hover {
@@ -1083,7 +1084,7 @@
             // 寻找不重叠的位置
             let x, y;
             let attempts = 0;
-            const maxAttempts = 50;
+            const maxAttempts = 100;
             
             do {
                 x = getRandom(5, 85);
@@ -1106,23 +1107,6 @@
                 height: height,
                 element: sticker
             });
-            
-            // 设置动画持续时间
-            let animationDuration;
-            switch(settings.animationSpeed) {
-                case 1: animationDuration = getRandom(12, 18); break;
-                case 2: animationDuration = getRandom(10, 16); break;
-                case 3: animationDuration = getRandom(8, 14); break;
-                case 4: animationDuration = getRandom(6, 12); break;
-                case 5: animationDuration = getRandom(4, 10); break;
-                default: animationDuration = getRandom(8, 14);
-            }
-            
-            if (!pulseMode) {
-                sticker.style.animationDuration = `${animationDuration}s, 3s`;
-            }
-            
-            sticker.style.animationDelay = `${getRandom(0, 5)}s`;
             
             stickerCount++;
             updateStats();
@@ -1281,7 +1265,7 @@
                 document.documentElement.style.setProperty('--text-dark', '#4a5568');
                 document.documentElement.style.setProperty('--text-light', '#ecf0f1');
                 document.documentElement.style.setProperty('--card-dark', 'rgba(255, 255, 255, 0.85)');
-                document.documentElement.style.setProperty('--card-light', 'rgba(44, 62, 80, 0.85)';
+                document.documentElement.style.setProperty('--card-light', 'rgba(44, 62, 80, 0.85)');
                 document.querySelector('.theme-toggle').innerHTML = '<i class="fas fa-moon"></i> 夜间模式';
             }
             
@@ -1491,8 +1475,8 @@
         function initMusic() {
             // 创建音频元素
             audio = new Audio();
-            // 使用一个可靠的音乐源
-            audio.src = 'https://m801.music.126.net/20251104211750/47e8a87f71ec6aad52ffb4670d82c1bf/jdymusic/obj/wo3DlMOGwrbDjj7DisKw/18761560338/6cbf/e4f9/cc89/6aa61e4ca56ff2de994532e7078031ca.mp3?vuutv=yVAlYoLIn86NXvGqQQHscJupYTyROt3Q4FV/5d0mL7BgaH7bVHNEIvexu8Nf9rp4whr9jXVH7fwFT7XcIYdQGl+tMG57y0Hxs4PM2PN2Rv0=&authSecret=0000019a4eed5eee0d250a3253d20006&cdntag=bWFyaz1vc193ZWIscXVhbGl0eV9leGhpZ2g';
+            // 使用一个可靠的音乐源 - 替换为公共领域的音乐
+            audio.src = 'https://assets.codepen.io/1468070/Chill-Out-Lo-Fi-Study-Music.mp3';
             audio.loop = true;
             
             // 播放按钮事件
@@ -1841,6 +1825,9 @@
             
             // 更新统计信息
             updateStats();
+            
+            // 显示初始通知
+            showNotification('页面已加载完成！');
         });
     </script>
 </body>
