@@ -2,38 +2,143 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>动态彩色文字标签</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>灰原什么的最可爱了(●'◡'●)</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
             margin: 0;
             overflow: hidden;
-            background-color: #f0f0f0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            font-family: "微软雅黑", "PingFang SC", sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
         }
+        
+        .container {
+            text-align: center;
+            z-index: 10;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
+            backdrop-filter: blur(4px);
+            max-width: 90%;
+            margin: 20px;
+        }
+        
+        h1 {
+            color: #4a5568;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        p {
+            color: #718096;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 50px;
+            background: #667eea;
+            color: white;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        button:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+        
         .sticker {
             position: absolute;
-            padding: 8px 12px;
-            border-radius: 4px;
+            padding: 10px 16px;
+            border-radius: 8px;
             color: white;
-            font-family: "微软雅黑", sans-serif;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            font-family: "微软雅黑", "PingFang SC", sans-serif;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             white-space: nowrap;
-            animation: float 8s infinite ease-in-out;
+            cursor: pointer;
+            user-select: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            z-index: 1;
+            font-weight: 500;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
         }
+        
+        .sticker:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+            z-index: 2;
+        }
+        
         @keyframes float {
             0%, 100% {
-                transform: translateY(0) rotate(0);
+                transform: translateY(0) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-15px) rotate(1deg);
             }
             50% {
-                transform: translateY(-20px) rotate(2deg);
+                transform: translateY(-5px) rotate(-1deg);
+            }
+            75% {
+                transform: translateY(-10px) rotate(2deg);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            .sticker {
+                font-size: 0.9rem;
+                padding: 8px 12px;
             }
         }
     </style>
 </head>
 <body>
+    <div class="container">
+        <h1>暖心鼓励标签</h1>
+        <p>这些温暖的话语会随机漂浮在屏幕上，点击标签可以移除它们</p>
+        <div class="controls">
+            <button id="addBtn">添加更多标签</button>
+            <button id="clearBtn">清除所有标签</button>
+        </div>
+    </div>
+
     <script>
         // 定义多条温暖的文字内容
         const texts = [
-            "生活合格祝你",
+            "生活善待你",
             "时间会治愈一切",
             "你是最美的意外",
             "勇敢一点",
@@ -58,17 +163,24 @@
             "开心每一天",
             "未来在等你",
             "相信自己",
-            "记得吃早饭"
+            "记得吃早饭",
+            "你很棒",
+            "坚持就是胜利",
+            "微笑是最好的语言",
+            "爱自己最重要"
         ];
 
         // 定义多种颜色
         const colors = [
-            "rgba(255, 99, 132, 0.8)",
-            "rgba(54, 162, 235, 0.8)",
-            "rgba(255, 206, 86, 0.8)",
-            "rgba(75, 192, 192, 0.8)",
-            "rgba(153, 102, 255, 0.8)",
-            "rgba(255, 159, 64, 0.8)"
+            "rgba(255, 99, 132, 0.85)",
+            "rgba(54, 162, 235, 0.85)",
+            "rgba(255, 206, 86, 0.85)",
+            "rgba(75, 192, 192, 0.85)",
+            "rgba(153, 102, 255, 0.85)",
+            "rgba(255, 159, 64, 0.85)",
+            "rgba(199, 199, 199, 0.85)",
+            "rgba(83, 102, 255, 0.85)",
+            "rgba(40, 159, 64, 0.85)"
         ];
 
         // 生成随机数的函数
@@ -80,32 +192,95 @@
         function createSticker() {
             const sticker = document.createElement("div");
             sticker.className = "sticker";
+            
             // 随机选择文字和颜色
             const text = texts[Math.floor(Math.random() * texts.length)];
             const color = colors[Math.floor(Math.random() * colors.length)];
+            
             sticker.textContent = text;
             sticker.style.backgroundColor = color;
+            
             // 随机位置
-            sticker.style.left = `${getRandom(5, 95)}%`;
-            sticker.style.top = `${getRandom(5, 95)}%`;
+            sticker.style.left = `${getRandom(5, 85)}%`;
+            sticker.style.top = `${getRandom(5, 85)}%`;
+            
+            // 随机字体大小
+            const fontSize = getRandom(16, 24);
+            sticker.style.fontSize = `${fontSize}px`;
+            
             // 随机动画延迟和持续时间
+            const animationDuration = `${getRandom(8, 15)}s`;
+            sticker.style.animation = `float ${animationDuration} infinite ease-in-out`;
             sticker.style.animationDelay = `${getRandom(0, 5)}s`;
-            sticker.style.animationDuration = `${getRandom(6, 12)}s`;
+            
+            // 添加点击移除功能
+            sticker.addEventListener('click', function() {
+                this.style.transition = 'all 0.5s ease';
+                this.style.transform = 'scale(0)';
+                this.style.opacity = '0';
+                setTimeout(() => {
+                    if (this.parentNode) {
+                        this.parentNode.removeChild(this);
+                    }
+                }, 500);
+            });
+            
             document.body.appendChild(sticker);
-
-            // 一段时间后移除并重新生成，保持动态
+            
+            // 一段时间后自动移除并重新生成，保持动态
             setTimeout(() => {
-                document.body.removeChild(sticker);
-                createSticker();
-            }, getRandom(8000, 15000));
+                if (sticker.parentNode) {
+                    sticker.style.transition = 'all 0.5s ease';
+                    sticker.style.opacity = '0';
+                    setTimeout(() => {
+                        if (sticker.parentNode) {
+                            sticker.parentNode.removeChild(sticker);
+                            createSticker();
+                        }
+                    }, 500);
+                }
+            }, getRandom(15000, 25000));
         }
 
         // 初始化，生成多个标签
-        for (let i = 0; i < 15; i++) {
-            setTimeout(() => {
-                createSticker();
-            }, i * 1000);
+        function initStickers(count) {
+            for (let i = 0; i < count; i++) {
+                setTimeout(() => {
+                    createSticker();
+                }, i * 500);
+            }
         }
+
+        // 清除所有标签
+        function clearAllStickers() {
+            const stickers = document.querySelectorAll('.sticker');
+            stickers.forEach(sticker => {
+                sticker.style.transition = 'all 0.5s ease';
+                sticker.style.transform = 'scale(0)';
+                sticker.style.opacity = '0';
+                setTimeout(() => {
+                    if (sticker.parentNode) {
+                        sticker.parentNode.removeChild(sticker);
+                    }
+                }, 500);
+            });
+        }
+
+        // 事件监听
+        document.getElementById('addBtn').addEventListener('click', function() {
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    createSticker();
+                }, i * 200);
+            }
+        });
+
+        document.getElementById('clearBtn').addEventListener('click', clearAllStickers);
+
+        // 页面加载时初始化
+        window.addEventListener('load', function() {
+            initStickers(15);
+        });
     </script>
 </body>
 </html>
