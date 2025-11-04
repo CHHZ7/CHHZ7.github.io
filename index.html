@@ -133,6 +133,9 @@
             color: #ecf0f1;
             z-index: 100;
             backdrop-filter: blur(4px);
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
         }
         
         .controls {
@@ -157,6 +160,10 @@
             transition: all 0.3s ease;
             border: none;
             font-family: inherit;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
         }
         
         .control-btn:hover {
@@ -175,24 +182,47 @@
             position: absolute;
             top: 80px;
             right: 20px;
-            background: rgba(44, 62, 80, 0.8);
+            background: rgba(44, 62, 80, 0.9);
             padding: 15px;
             border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
             color: #ecf0f1;
             z-index: 100;
             backdrop-filter: blur(4px);
-            width: 200px;
+            width: 220px;
             display: none;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .settings-panel h3 {
             margin-bottom: 10px;
             font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            color: #ecf0f1;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
         }
         
         .setting-item {
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
         
         .setting-item label {
@@ -203,6 +233,19 @@
         
         .setting-item input[type="range"] {
             width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            height: 5px;
+            outline: none;
+        }
+        
+        .setting-item input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: #3498db;
+            cursor: pointer;
         }
         
         .theme-toggle {
@@ -219,26 +262,147 @@
             backdrop-filter: blur(4px);
             cursor: pointer;
             transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
         }
         
         .theme-toggle:hover {
             background: rgba(52, 73, 94, 0.9);
             transform: scale(1.05);
         }
+        
+        .music-player {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(44, 62, 80, 0.7);
+            padding: 10px 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            color: #ecf0f1;
+            z-index: 100;
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .music-btn {
+            background: none;
+            border: none;
+            color: #ecf0f1;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .music-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .progress-bar {
+            width: 100px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background: #3498db;
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+        
+        .effect-buttons {
+            position: absolute;
+            top: 80px;
+            left: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 100;
+        }
+        
+        .effect-btn {
+            background: rgba(44, 62, 80, 0.7);
+            padding: 8px 15px;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            font-size: 0.9rem;
+            color: #ecf0f1;
+            backdrop-filter: blur(4px);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+        
+        .effect-btn:hover {
+            background: rgba(52, 73, 94, 0.9);
+            transform: scale(1.05);
+        }
+        
+        .notification {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(44, 62, 80, 0.9);
+            color: #ecf0f1;
+            padding: 10px 20px;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            backdrop-filter: blur(4px);
+            display: none;
+            animation: fadeInOut 3s ease;
+        }
+        
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            10%, 90% { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+        
+        .sticker-counter {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .counter-icon {
+            font-size: 1.2rem;
+        }
     </style>
 </head>
 <body>
     <div class="title">灰原什么的最可爱了(●'◡'●)</div>
-    <div class="theme-toggle">日间模式</div>
+    <div class="theme-toggle">🌞 日间模式</div>
     
     <div class="controls">
-        <button class="control-btn" id="addBtn">添加标签</button>
-        <button class="control-btn" id="clearBtn">清除标签</button>
-        <button class="control-btn" id="settingsBtn">设置</button>
+        <button class="control-btn" id="clearBtn">🗑️ 清除标签</button>
+        <button class="control-btn" id="settingsBtn">⚙️ 设置</button>
+    </div>
+    
+    <div class="effect-buttons">
+        <button class="effect-btn" id="rainbowBtn">🌈 彩虹模式</button>
+        <button class="effect-btn" id="pulseBtn">💓 心跳模式</button>
+        <button class="effect-btn" id="explodeBtn">💥 爆炸效果</button>
     </div>
     
     <div class="settings-panel" id="settingsPanel">
-        <h3>设置</h3>
+        <h3>设置 <button class="close-btn" id="closeSettings">×</button></h3>
         <div class="setting-item">
             <label for="stickerCount">标签数量: <span id="countValue">15</span></label>
             <input type="range" id="stickerCount" min="5" max="30" value="15">
@@ -252,6 +416,10 @@
             <input type="range" id="fontSize" min="1" max="5" value="3">
         </div>
         <div class="setting-item">
+            <label for="spawnRate">生成速度: <span id="rateValue">正常</span></label>
+            <input type="range" id="spawnRate" min="1" max="5" value="3">
+        </div>
+        <div class="setting-item">
             <label>
                 <input type="checkbox" id="enableParticles" checked> 启用粒子效果
             </label>
@@ -261,9 +429,30 @@
                 <input type="checkbox" id="enableHearts" checked> 启用心形动画
             </label>
         </div>
+        <div class="setting-item">
+            <label>
+                <input type="checkbox" id="enableMusic" checked> 启用背景音乐
+            </label>
+        </div>
     </div>
     
-    <div class="info-panel">标签数量: <span id="count">0</span></div>
+    <div class="info-panel">
+        <div class="sticker-counter">
+            <span class="counter-icon">🏷️</span> 标签数量: <span id="count">0</span>
+        </div>
+        <div>点击标签可移除</div>
+        <div>双击空白处添加标签</div>
+    </div>
+    
+    <div class="music-player">
+        <button class="music-btn" id="playBtn">▶️</button>
+        <button class="music-btn" id="pauseBtn">⏸️</button>
+        <div class="progress-bar">
+            <div class="progress" id="musicProgress"></div>
+        </div>
+    </div>
+    
+    <div class="notification" id="notification"></div>
 
     <script>
         // 定义100条温暖的文字内容（已移除名人名字）
@@ -401,9 +590,22 @@
             stickerCount: 15,
             animationSpeed: 3,
             fontSize: 3,
+            spawnRate: 3,
             enableParticles: true,
-            enableHearts: true
+            enableHearts: true,
+            enableMusic: true
         };
+        
+        // 音乐
+        let audioContext;
+        let audioSource;
+        let isPlaying = false;
+        let currentTime = 0;
+        let startTime = 0;
+        
+        // 特效模式
+        let rainbowMode = false;
+        let pulseMode = false;
 
         // 生成随机数的函数
         function getRandom(min, max) {
@@ -431,10 +633,25 @@
             
             // 随机选择文字和颜色
             const text = texts[Math.floor(Math.random() * texts.length)];
-            const color = colors[Math.floor(Math.random() * colors.length)];
+            
+            // 彩虹模式特效
+            let color;
+            if (rainbowMode) {
+                const hue = Math.floor(getRandom(0, 360));
+                color = `hsla(${hue}, 70%, 60%, 0.85)`;
+            } else {
+                color = colors[Math.floor(Math.random() * colors.length)];
+            }
             
             sticker.textContent = text;
             sticker.style.backgroundColor = color;
+            
+            // 心跳模式特效
+            if (pulseMode) {
+                sticker.style.animation = `float ${getRandom(4, 8)}s infinite ease-in-out, pulse 1.5s infinite ease-in-out`;
+            } else {
+                sticker.style.animation = `float ${getRandom(8, 14)}s infinite ease-in-out`;
+            }
             
             // 根据设置调整字体大小
             let fontSize;
@@ -494,7 +711,10 @@
                 default: animationDuration = getRandom(8, 14);
             }
             
-            sticker.style.animation = `float ${animationDuration}s infinite ease-in-out`;
+            if (!pulseMode) {
+                sticker.style.animationDuration = `${animationDuration}s`;
+            }
+            
             sticker.style.animationDelay = `${getRandom(0, 5)}s`;
             
             // 更新计数
@@ -578,7 +798,7 @@
             
             if (isNightMode) {
                 document.body.style.background = 'linear-gradient(135deg, #2c3e50 0%, #34495e 100%)';
-                document.querySelector('.theme-toggle').textContent = '日间模式';
+                document.querySelector('.theme-toggle').innerHTML = '🌞 日间模式';
                 document.querySelector('.title').style.color = '#ecf0f1';
                 document.querySelector('.title').style.background = 'rgba(44, 62, 80, 0.7)';
                 document.querySelector('.info-panel').style.background = 'rgba(44, 62, 80, 0.7)';
@@ -589,11 +809,16 @@
                 });
                 document.querySelector('.theme-toggle').style.background = 'rgba(44, 62, 80, 0.7)';
                 document.querySelector('.theme-toggle').style.color = '#ecf0f1';
-                document.querySelector('.settings-panel').style.background = 'rgba(44, 62, 80, 0.8)';
+                document.querySelector('.settings-panel').style.background = 'rgba(44, 62, 80, 0.9)';
                 document.querySelector('.settings-panel').style.color = '#ecf0f1';
+                document.querySelectorAll('.effect-btn').forEach(btn => {
+                    btn.style.background = 'rgba(44, 62, 80, 0.7)';
+                    btn.style.color = '#ecf0f1';
+                });
+                document.querySelector('.music-player').style.background = 'rgba(44, 62, 80, 0.7)';
             } else {
                 document.body.style.background = 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)';
-                document.querySelector('.theme-toggle').textContent = '夜间模式';
+                document.querySelector('.theme-toggle').innerHTML = '🌙 夜间模式';
                 document.querySelector('.title').style.color = '#4a5568';
                 document.querySelector('.title').style.background = 'rgba(255, 255, 255, 0.7)';
                 document.querySelector('.info-panel').style.background = 'rgba(255, 255, 255, 0.8)';
@@ -604,8 +829,14 @@
                 });
                 document.querySelector('.theme-toggle').style.background = 'rgba(255, 255, 255, 0.8)';
                 document.querySelector('.theme-toggle').style.color = '#4a5568';
-                document.querySelector('.settings-panel').style.background = 'rgba(255, 255, 255, 0.8)';
+                document.querySelector('.settings-panel').style.background = 'rgba(255, 255, 255, 0.9)';
                 document.querySelector('.settings-panel').style.color = '#4a5568';
+                document.querySelectorAll('.effect-btn').forEach(btn => {
+                    btn.style.background = 'rgba(255, 255, 255, 0.8)';
+                    btn.style.color = '#4a5568';
+                });
+                document.querySelector('.music-player').style.background = 'rgba(255, 255, 255, 0.8)';
+                document.querySelector('.music-player').style.color = '#4a5568';
             }
         }
 
@@ -728,24 +959,109 @@
             }
             document.getElementById('sizeValue').textContent = sizeText;
             
+            let rateText;
+            switch(settings.spawnRate) {
+                case 1: rateText = '很慢'; break;
+                case 2: rateText = '较慢'; break;
+                case 3: rateText = '正常'; break;
+                case 4: rateText = '较快'; break;
+                case 5: rateText = '很快'; break;
+                default: rateText = '正常';
+            }
+            document.getElementById('rateValue').textContent = rateText;
+            
             document.getElementById('enableParticles').checked = settings.enableParticles;
             document.getElementById('enableHearts').checked = settings.enableHearts;
+            document.getElementById('enableMusic').checked = settings.enableMusic;
+        }
+
+        // 显示通知
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.style.display = 'block';
+            
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+
+        // 切换彩虹模式
+        function toggleRainbowMode() {
+            rainbowMode = !rainbowMode;
+            document.getElementById('rainbowBtn').innerHTML = rainbowMode ? '🌈 彩虹模式(开)' : '🌈 彩虹模式';
+            showNotification(rainbowMode ? '彩虹模式已开启' : '彩虹模式已关闭');
+            
+            // 更新所有现有标签的颜色
+            const stickers = document.querySelectorAll('.sticker');
+            stickers.forEach(sticker => {
+                if (rainbowMode) {
+                    const hue = Math.floor(getRandom(0, 360));
+                    sticker.style.backgroundColor = `hsla(${hue}, 70%, 60%, 0.85)`;
+                } else {
+                    const color = colors[Math.floor(Math.random() * colors.length)];
+                    sticker.style.backgroundColor = color;
+                }
+            });
+        }
+
+        // 切换心跳模式
+        function togglePulseMode() {
+            pulseMode = !pulseMode;
+            document.getElementById('pulseBtn').innerHTML = pulseMode ? '💓 心跳模式(开)' : '💓 心跳模式';
+            showNotification(pulseMode ? '心跳模式已开启' : '心跳模式已关闭');
+            
+            // 更新所有现有标签的动画
+            const stickers = document.querySelectorAll('.sticker');
+            stickers.forEach(sticker => {
+                if (pulseMode) {
+                    sticker.style.animation = `float ${getRandom(4, 8)}s infinite ease-in-out, pulse 1.5s infinite ease-in-out`;
+                } else {
+                    sticker.style.animation = `float ${getRandom(8, 14)}s infinite ease-in-out`;
+                }
+            });
+        }
+
+        // 爆炸效果
+        function explodeStickers() {
+            const stickers = document.querySelectorAll('.sticker');
+            stickers.forEach((sticker, index) => {
+                setTimeout(() => {
+                    sticker.style.transition = 'all 0.5s ease';
+                    sticker.style.transform = `translate(${getRandom(-100, 100)}px, ${getRandom(-100, 100)}px) rotate(${getRandom(-180, 180)}deg)`;
+                    sticker.style.opacity = '0';
+                    
+                    setTimeout(() => {
+                        if (sticker.parentNode) {
+                            sticker.parentNode.removeChild(sticker);
+                            
+                            // 从位置数组中移除
+                            const posIndex = stickerPositions.findIndex(pos => pos.element === sticker);
+                            if (posIndex !== -1) {
+                                stickerPositions.splice(posIndex, 1);
+                            }
+                            
+                            stickerCount--;
+                            document.getElementById('count').textContent = stickerCount;
+                        }
+                    }, 500);
+                }, index * 50);
+            });
+            
+            showNotification('爆炸效果！所有标签已清除');
         }
 
         // 事件监听
-        document.getElementById('addBtn').addEventListener('click', function() {
-            for (let i = 0; i < 5; i++) {
-                setTimeout(() => {
-                    createSticker();
-                }, i * 200);
-            }
-        });
-
         document.getElementById('clearBtn').addEventListener('click', clearAllStickers);
         
         document.getElementById('settingsBtn').addEventListener('click', function() {
             const panel = document.getElementById('settingsPanel');
-            panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+            panel.style.display = 'block';
+        });
+        
+        document.getElementById('closeSettings').addEventListener('click', function() {
+            const panel = document.getElementById('settingsPanel');
+            panel.style.display = 'none';
         });
         
         document.querySelector('.theme-toggle').addEventListener('click', toggleTheme);
@@ -766,6 +1082,11 @@
             updateSettingsDisplay();
         });
         
+        document.getElementById('spawnRate').addEventListener('input', function() {
+            settings.spawnRate = parseInt(this.value);
+            updateSettingsDisplay();
+        });
+        
         document.getElementById('enableParticles').addEventListener('change', function() {
             settings.enableParticles = this.checked;
             if (settings.enableParticles) {
@@ -778,6 +1099,15 @@
         document.getElementById('enableHearts').addEventListener('change', function() {
             settings.enableHearts = this.checked;
         });
+        
+        document.getElementById('enableMusic').addEventListener('change', function() {
+            settings.enableMusic = this.checked;
+        });
+        
+        // 特效按钮事件
+        document.getElementById('rainbowBtn').addEventListener('click', toggleRainbowMode);
+        document.getElementById('pulseBtn').addEventListener('click', togglePulseMode);
+        document.getElementById('explodeBtn').addEventListener('click', explodeStickers);
 
         // 双击创建标签
         document.addEventListener('dblclick', function(e) {
@@ -804,12 +1134,23 @@
             // 创建粒子效果
             createParticles();
             
+            // 根据生成速度设置标签生成间隔
+            let spawnInterval;
+            switch(settings.spawnRate) {
+                case 1: spawnInterval = 5000; break;
+                case 2: spawnInterval = 4000; break;
+                case 3: spawnInterval = 3000; break;
+                case 4: spawnInterval = 2000; break;
+                case 5: spawnInterval = 1000; break;
+                default: spawnInterval = 3000;
+            }
+            
             // 每隔一段时间创建一个新标签
             setInterval(() => {
                 if (stickerCount < settings.stickerCount) {
                     createSticker();
                 }
-            }, 3000);
+            }, spawnInterval);
         });
     </script>
 </body>
