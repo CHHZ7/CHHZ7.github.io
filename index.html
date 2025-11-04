@@ -14,11 +14,12 @@
         body {
             margin: 0;
             overflow: hidden;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
             font-family: "微软雅黑", "PingFang SC", sans-serif;
             height: 100vh;
             position: relative;
             cursor: default;
+            transition: background 0.5s ease;
         }
         
         .title {
@@ -26,16 +27,16 @@
             top: 20px;
             left: 50%;
             transform: translateX(-50%);
-            color: #4a5568;
+            color: #ecf0f1;
             font-size: 2rem;
             text-align: center;
             z-index: 100;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            background: rgba(255, 255, 255, 0.7);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            background: rgba(44, 62, 80, 0.7);
             padding: 10px 20px;
             border-radius: 50px;
             backdrop-filter: blur(4px);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             transition: all 0.3s ease;
         }
         
@@ -49,19 +50,19 @@
             border-radius: 8px;
             color: white;
             font-family: "微软雅黑", "PingFang SC", sans-serif;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
             white-space: nowrap;
             cursor: pointer;
             user-select: none;
             transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.5s ease;
             z-index: 1;
             font-weight: 500;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
         }
         
         .sticker:hover {
             transform: scale(1.08);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
             z-index: 2;
         }
         
@@ -124,51 +125,154 @@
             position: absolute;
             bottom: 20px;
             right: 20px;
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(44, 62, 80, 0.7);
             padding: 10px 15px;
             border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             font-size: 0.9rem;
-            color: #4a5568;
+            color: #ecf0f1;
             z-index: 100;
             backdrop-filter: blur(4px);
         }
         
-        .mode-toggle {
+        .controls {
             position: absolute;
             top: 20px;
             right: 20px;
-            background: rgba(255, 255, 255, 0.8);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 100;
+        }
+        
+        .control-btn {
+            background: rgba(44, 62, 80, 0.7);
             padding: 8px 15px;
             border-radius: 50px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             font-size: 0.9rem;
-            color: #4a5568;
+            color: #ecf0f1;
+            backdrop-filter: blur(4px);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-family: inherit;
+        }
+        
+        .control-btn:hover {
+            background: rgba(52, 73, 94, 0.9);
+            transform: scale(1.05);
+        }
+        
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .settings-panel {
+            position: absolute;
+            top: 80px;
+            right: 20px;
+            background: rgba(44, 62, 80, 0.8);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            color: #ecf0f1;
+            z-index: 100;
+            backdrop-filter: blur(4px);
+            width: 200px;
+            display: none;
+        }
+        
+        .settings-panel h3 {
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+        
+        .setting-item {
+            margin-bottom: 10px;
+        }
+        
+        .setting-item label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.8rem;
+        }
+        
+        .setting-item input[type="range"] {
+            width: 100%;
+        }
+        
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(44, 62, 80, 0.7);
+            padding: 8px 15px;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            font-size: 0.9rem;
+            color: #ecf0f1;
             z-index: 100;
             backdrop-filter: blur(4px);
             cursor: pointer;
             transition: all 0.3s ease;
         }
         
-        .mode-toggle:hover {
-            background: rgba(255, 255, 255, 0.9);
+        .theme-toggle:hover {
+            background: rgba(52, 73, 94, 0.9);
             transform: scale(1.05);
         }
     </style>
 </head>
 <body>
     <div class="title">灰原什么的最可爱了(●'◡'●)</div>
-    <div class="mode-toggle">夜间模式</div>
+    <div class="theme-toggle">日间模式</div>
+    
+    <div class="controls">
+        <button class="control-btn" id="addBtn">添加标签</button>
+        <button class="control-btn" id="clearBtn">清除标签</button>
+        <button class="control-btn" id="settingsBtn">设置</button>
+    </div>
+    
+    <div class="settings-panel" id="settingsPanel">
+        <h3>设置</h3>
+        <div class="setting-item">
+            <label for="stickerCount">标签数量: <span id="countValue">15</span></label>
+            <input type="range" id="stickerCount" min="5" max="30" value="15">
+        </div>
+        <div class="setting-item">
+            <label for="animationSpeed">动画速度: <span id="speedValue">正常</span></label>
+            <input type="range" id="animationSpeed" min="1" max="5" value="3">
+        </div>
+        <div class="setting-item">
+            <label for="fontSize">字体大小: <span id="sizeValue">中等</span></label>
+            <input type="range" id="fontSize" min="1" max="5" value="3">
+        </div>
+        <div class="setting-item">
+            <label>
+                <input type="checkbox" id="enableParticles" checked> 启用粒子效果
+            </label>
+        </div>
+        <div class="setting-item">
+            <label>
+                <input type="checkbox" id="enableHearts" checked> 启用心形动画
+            </label>
+        </div>
+    </div>
+    
     <div class="info-panel">标签数量: <span id="count">0</span></div>
 
     <script>
-        // 定义100条温暖的文字内容
+        // 定义100条温暖的文字内容（已移除名人名字）
         const texts = [
             "你值得这世间，所有的美好。",
             "心若有所向往，何惧道阻且长。",
             "命运不会亏待正在努力变好的你",
             "愿你成为自己的太阳，无需借助谁的光。",
-            "凭时间赢来的东西，时间肯定会为之作证。 —— 村上春树",
+            "凭时间赢来的东西，时间肯定会为之作证。",
             "错过了落日余晖，还可以静待满天繁星。",
             "努力去做一个温暖的人，用真心对世界微笑，用眼泪提醒自己要做的更好，用快乐去迎接每一天的阳光，用自信向世界宣称你过得很好。",
             "不要沉醉于过去，不要遐想于未来，专注于即将流逝的现在。",
@@ -177,26 +281,26 @@
             "每天提醒自己，你有多自律，就有多美好。只要你还愿意努力，生活会不断给你惊喜！",
             "请再努力一下，为了你想见的人，想做的事，想成为的自己",
             "把努力当成一种习惯，而不是三分钟热度。坚持才是王道，每一个你羡慕的收获，都是别人努力用心拼来的，你可以报怨，也可以无视，但记住，不努力，连认输的资格都没有！",
-            "捂住你的耳朵，专注于而前的事，不要受干扰，不要想结果。 —— 卢思浩",
-            "就算步子很小，也要一步步前进。 —— 夏目友人帐",
-            "陪你到最后的那个人，只有你自己，你就是自己的神。 —— 辛夷坞 《原来》",
-            "要好好珍惜自己的名字：记得自己是谁，便知道自己要做什么，要走什么样的路。 —— 宫崎骏",
+            "捂住你的耳朵，专注于而前的事，不要受干扰，不要想结果。",
+            "就算步子很小，也要一步步前进。",
+            "陪你到最后的那个人，只有你自己，你就是自己的神。",
+            "要好好珍惜自己的名字：记得自己是谁，便知道自己要做什么，要走什么样的路。",
             "过往不恋，未来不迎，当下不负。",
             "你期待的，正在向你走来​。",
             "努力追上那个曾经被赋予厚望的自己",
-            "迷茫时，坚定地对自己说，当时的梦想，我还记得 —— 宫崎骏",
+            "迷茫时，坚定地对自己说，当时的梦想，我还记得",
             "如果你累了，学会休息，而不是放弃。",
-            "坐看庭前花开花落，笑看天边云卷云舒。 —— 陈继儒",
+            "坐看庭前花开花落，笑看天边云卷云舒。",
             "发光不是太阳的权利，每个人都可以。",
             "无论这个世界对你怎样，都请你一如既往的努力、勇敢、充满希望。",
             "即使生活有一千个理由让你哭，你也要找到一个理由让自己笑，这就是人生。",
-            "想要无可取代，就必须时刻与众不同。 —— 可可·香奈儿",
-            "你干嘛在乎别人怎么想？ —— 费曼",
+            "想要无可取代，就必须时刻与众不同。",
+            "你干嘛在乎别人怎么想？",
             "当你能一个人默默消化掉负面情绪的时候，你就真的长大了",
             "失落时悄悄伸出手和风击个掌。",
             "心中的微光，是梦想出发的地方。",
             "糟糕的日子往往有特别的价值 但前提是你要挺过去 你要让所有的糟糕都变得值得",
-            "生活不是等着暴风雨过去，而是学会在风雨中跳舞。 —— 柯云路",
+            "生活不是等着暴风雨过去，而是学会在风雨中跳舞。",
             "当你觉得什么都没意思的时候你就学习，学起习来身边的任何东西都变得有趣了。",
             "星光不问赶路人，时光不负有心人。",
             "真正在努力的，日子是不会舒服的。把自己变优秀，其他的事情自然就会跟着好起来，会讲究，能将就，能享受最好的，也能承受最坏的。",
@@ -209,17 +313,17 @@
             "人间一趟，积极向上，不念过往，不畏将来",
             "与其在别人伞下将就，不如自己在雨里奔跑。",
             "向日葵告诉我，只要面对着阳光努力向上，日子就会变得单纯而美好。",
-            "如今我努力奔跑，不过是为了追上那个曾经被寄予厚望的自己。 —— 肖恩·利文斯顿",
+            "如今我努力奔跑，不过是为了追上那个曾经被寄予厚望的自己。",
             "接受自己的普通，也要记得发现自己的美。",
             "在这样的时刻，我们需要耐心等待，满怀信心地去期待，相信，生活不会放弃你，命运不会抛弃你。如果你耐不住寂寞，就看不到繁华。",
             "阻碍你的，是恐惧和优柔寡断，你得相信自己，往前走吧。",
-            "一旦你从心里接纳了自己的弱点，就再也没有人可以用这个事情伤害你。 —— 庞颖",
+            "一旦你从心里接纳了自己的弱点，就再也没有人可以用这个事情伤害你。",
             "人生的旅途中，你总有那么一段时间，需要自己走，需要自己扛。不要感觉害怕，不要感觉孤单，这只不过是成长的代价罢了。",
             "真正治愈自己的，只有自己；不去抱怨，尽量担待；不怕孤单，努力沉淀。",
-            "我经历了失败、失败再失败，但这就是我成功的原因。 —— 乔丹",
+            "我经历了失败、失败再失败，但这就是我成功的原因。",
             "当你足够努力时，幸运总会和你不期而遇。",
             "这一路你可以哭，但是你一定不能停。",
-            "不要尝试做你喜欢的事，要去喜欢你正在做的事。 —— 丘吉尔",
+            "不要尝试做你喜欢的事，要去喜欢你正在做的事。",
             "生活在阴沟里，也要记得仰望星空",
             "你未必光芒万丈，但始终温暖有光。",
             "因为有梦，所以勇敢出发，选择出发，便只顾风雨兼程。",
@@ -229,10 +333,10 @@
             "人生，总有些黑暗的隧道需要自己穿越。",
             "当生活压得你喘不过来气的时候，一定要学会自己为自己鼓掌。",
             "做自己喜欢做的事情，做自己擅长的事情，找回成功的喜悦，找回失去的信心，找到前进动力和方向。",
-            "很多事情就像是旅行一样，当你决定要出发的时候，最困难的那部分其实就已经完成了 —— 卢思浩",
+            "很多事情就像是旅行一样，当你决定要出发的时候，最困难的那部分其实就已经完成了",
             "心小了，所有的小事就大了；心大了，所有的大事都小了；看淡世事沧桑，内心安然无恙。",
             "在多说无益的时候，也许沉默就是最好的解释。",
-            "我能接受失败，但我不能接受放弃 —— 科比·布莱恩特",
+            "我能接受失败，但我不能接受放弃",
             "当你有一种坚韧不拔的精神，当你为了一个目标愿意慢慢去努力，用时间争取自己的未来，往往最后能取得的成就比那些跑得快的人还要多。",
             "淡然，是人生的一种成长。别让生活的压力挤走快乐，收拾情绪，重新上路。",
             "累了，蹲下来抱抱自己，依旧倔强的说：也不过如此。",
@@ -246,11 +350,11 @@
             "我看到前方黑暗的尽头，有光在等着我。",
             "即使深陷沟渠，也要仰望星空。",
             "世界很大、风景很美、机会很多、人生很短，不要蜷缩在一小块阴影里。",
-            "虽则人世充满了痛苦，但也充满克服痛苦的办法。 —— 海伦·凯勒",
+            "虽则人世充满了痛苦，但也充满克服痛苦的办法。",
             "保持乐观积极的情绪，逆着阳光，一路向前!",
             "在以后的日子里，你还会遇到很多类似的事，但不管怎样，不要让暗影吞噬你的心。",
             "你生来就值得被爱，这一点你无需质疑",
-            "凡自强不息者，终将得到救赎。 —— 浮士德",
+            "凡自强不息者，终将得到救赎。",
             "含泪播种的人一定能含笑收获。",
             "黑暗的夜才会看见最美的星光，人生亦是如此。",
             "就算世界有一千个理由让你哭泣，你也要有一千零一个理由微笑。",
@@ -285,22 +389,35 @@
         // 记录所有标签的位置和大小
         const stickerPositions = [];
         
-        // 夜间模式状态
-        let isNightMode = false;
+        // 默认夜间模式
+        let isNightMode = true;
+        
+        // 粒子效果
+        let particles = [];
+        let particleInterval;
+        
+        // 设置
+        let settings = {
+            stickerCount: 15,
+            animationSpeed: 3,
+            fontSize: 3,
+            enableParticles: true,
+            enableHearts: true
+        };
 
         // 生成随机数的函数
         function getRandom(min, max) {
             return Math.random() * (max - min) + min;
         }
 
-        // 检查位置是否与现有标签重叠太多
+        // 检查位置是否与现有标签重叠
         function isOverlapping(x, y, width, height) {
             for (const pos of stickerPositions) {
                 const dx = Math.abs(x - pos.x);
                 const dy = Math.abs(y - pos.y);
                 
-                // 如果两个标签中心点的距离小于它们的宽度和高度之和的一半，则认为重叠太多
-                if (dx < (width + pos.width) / 2 && dy < (height + pos.height) / 2) {
+                // 如果两个标签中心点的距离小于它们的宽度和高度之和的一半，则认为重叠
+                if (dx < (width + pos.width) / 2 + 10 && dy < (height + pos.height) / 2 + 10) {
                     return true;
                 }
             }
@@ -319,8 +436,16 @@
             sticker.textContent = text;
             sticker.style.backgroundColor = color;
             
-            // 随机字体大小
-            const fontSize = getRandom(16, 24);
+            // 根据设置调整字体大小
+            let fontSize;
+            switch(settings.fontSize) {
+                case 1: fontSize = getRandom(12, 16); break;
+                case 2: fontSize = getRandom(14, 18); break;
+                case 3: fontSize = getRandom(16, 22); break;
+                case 4: fontSize = getRandom(18, 24); break;
+                case 5: fontSize = getRandom(20, 26); break;
+                default: fontSize = getRandom(16, 22);
+            }
             sticker.style.fontSize = `${fontSize}px`;
             
             // 先添加到DOM以获取实际尺寸
@@ -331,13 +456,19 @@
             // 寻找不重叠的位置
             let x, y;
             let attempts = 0;
-            const maxAttempts = 20;
+            const maxAttempts = 50;
             
             do {
                 x = getRandom(5, 85);
                 y = getRandom(15, 85);
                 attempts++;
             } while (isOverlapping(x, y, width, height) && attempts < maxAttempts);
+            
+            // 如果尝试次数过多，直接移除并返回
+            if (attempts >= maxAttempts) {
+                document.body.removeChild(sticker);
+                return;
+            }
             
             // 设置位置
             sticker.style.left = `${x}%`;
@@ -352,9 +483,18 @@
                 element: sticker
             });
             
-            // 随机动画延迟和持续时间
-            const animationDuration = `${getRandom(8, 15)}s`;
-            sticker.style.animation = `float ${animationDuration} infinite ease-in-out`;
+            // 根据设置调整动画速度
+            let animationDuration;
+            switch(settings.animationSpeed) {
+                case 1: animationDuration = getRandom(12, 18); break;
+                case 2: animationDuration = getRandom(10, 16); break;
+                case 3: animationDuration = getRandom(8, 14); break;
+                case 4: animationDuration = getRandom(6, 12); break;
+                case 5: animationDuration = getRandom(4, 10); break;
+                default: animationDuration = getRandom(8, 14);
+            }
+            
+            sticker.style.animation = `float ${animationDuration}s infinite ease-in-out`;
             sticker.style.animationDelay = `${getRandom(0, 5)}s`;
             
             // 更新计数
@@ -382,11 +522,13 @@
             });
             
             // 添加右键菜单功能
-            sticker.addEventListener('contextmenu', function(e) {
-                e.preventDefault();
-                createHeart(e.clientX, e.clientY);
-                return false;
-            });
+            if (settings.enableHearts) {
+                sticker.addEventListener('contextmenu', function(e) {
+                    e.preventDefault();
+                    createHeart(e.clientX, e.clientY);
+                    return false;
+                });
+            }
             
             // 一段时间后自动移除并重新生成，保持动态
             setTimeout(() => {
@@ -413,6 +555,8 @@
 
         // 创建爱心效果
         function createHeart(x, y) {
+            if (!settings.enableHearts) return;
+            
             const heart = document.createElement('div');
             heart.className = 'heart';
             heart.style.left = `${x - 10}px`;
@@ -428,30 +572,212 @@
             }, 1000);
         }
 
-        // 切换夜间模式
-        function toggleNightMode() {
+        // 切换主题模式
+        function toggleTheme() {
             isNightMode = !isNightMode;
             
             if (isNightMode) {
                 document.body.style.background = 'linear-gradient(135deg, #2c3e50 0%, #34495e 100%)';
-                document.querySelector('.mode-toggle').textContent = '日间模式';
+                document.querySelector('.theme-toggle').textContent = '日间模式';
                 document.querySelector('.title').style.color = '#ecf0f1';
                 document.querySelector('.title').style.background = 'rgba(44, 62, 80, 0.7)';
                 document.querySelector('.info-panel').style.background = 'rgba(44, 62, 80, 0.7)';
                 document.querySelector('.info-panel').style.color = '#ecf0f1';
-                document.querySelector('.mode-toggle').style.background = 'rgba(44, 62, 80, 0.7)';
-                document.querySelector('.mode-toggle').style.color = '#ecf0f1';
+                document.querySelectorAll('.control-btn').forEach(btn => {
+                    btn.style.background = 'rgba(44, 62, 80, 0.7)';
+                    btn.style.color = '#ecf0f1';
+                });
+                document.querySelector('.theme-toggle').style.background = 'rgba(44, 62, 80, 0.7)';
+                document.querySelector('.theme-toggle').style.color = '#ecf0f1';
+                document.querySelector('.settings-panel').style.background = 'rgba(44, 62, 80, 0.8)';
+                document.querySelector('.settings-panel').style.color = '#ecf0f1';
             } else {
                 document.body.style.background = 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)';
-                document.querySelector('.mode-toggle').textContent = '夜间模式';
+                document.querySelector('.theme-toggle').textContent = '夜间模式';
                 document.querySelector('.title').style.color = '#4a5568';
                 document.querySelector('.title').style.background = 'rgba(255, 255, 255, 0.7)';
                 document.querySelector('.info-panel').style.background = 'rgba(255, 255, 255, 0.8)';
                 document.querySelector('.info-panel').style.color = '#4a5568';
-                document.querySelector('.mode-toggle').style.background = 'rgba(255, 255, 255, 0.8)';
-                document.querySelector('.mode-toggle').style.color = '#4a5568';
+                document.querySelectorAll('.control-btn').forEach(btn => {
+                    btn.style.background = 'rgba(255, 255, 255, 0.8)';
+                    btn.style.color = '#4a5568';
+                });
+                document.querySelector('.theme-toggle').style.background = 'rgba(255, 255, 255, 0.8)';
+                document.querySelector('.theme-toggle').style.color = '#4a5568';
+                document.querySelector('.settings-panel').style.background = 'rgba(255, 255, 255, 0.8)';
+                document.querySelector('.settings-panel').style.color = '#4a5568';
             }
         }
+
+        // 创建粒子效果
+        function createParticles() {
+            if (!settings.enableParticles) return;
+            
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                const size = getRandom(2, 6);
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                const x = getRandom(0, 100);
+                const y = getRandom(0, 100);
+                particle.style.left = `${x}%`;
+                particle.style.top = `${y}%`;
+                
+                const colorIndex = Math.floor(Math.random() * colors.length);
+                particle.style.backgroundColor = colors[colorIndex].replace('0.85', '0.3');
+                
+                document.body.appendChild(particle);
+                
+                particles.push({
+                    element: particle,
+                    x: x,
+                    y: y,
+                    speedX: getRandom(-0.5, 0.5),
+                    speedY: getRandom(-0.5, 0.5)
+                });
+            }
+            
+            // 更新粒子位置
+            particleInterval = setInterval(() => {
+                if (!settings.enableParticles) {
+                    clearInterval(particleInterval);
+                    return;
+                }
+                
+                particles.forEach(particle => {
+                    particle.x += particle.speedX;
+                    particle.y += particle.speedY;
+                    
+                    // 边界检查
+                    if (particle.x < 0 || particle.x > 100) particle.speedX *= -1;
+                    if (particle.y < 0 || particle.y > 100) particle.speedY *= -1;
+                    
+                    particle.element.style.left = `${particle.x}%`;
+                    particle.element.style.top = `${particle.y}%`;
+                });
+            }, 50);
+        }
+
+        // 清除粒子效果
+        function clearParticles() {
+            particles.forEach(particle => {
+                if (particle.element.parentNode) {
+                    particle.element.parentNode.removeChild(particle.element);
+                }
+            });
+            particles = [];
+            clearInterval(particleInterval);
+        }
+
+        // 初始化标签
+        function initStickers(count) {
+            for (let i = 0; i < count; i++) {
+                setTimeout(() => {
+                    createSticker();
+                }, i * 300);
+            }
+        }
+
+        // 清除所有标签
+        function clearAllStickers() {
+            const stickers = document.querySelectorAll('.sticker');
+            stickers.forEach(sticker => {
+                sticker.style.transition = 'all 0.5s ease';
+                sticker.style.transform = 'scale(0)';
+                sticker.style.opacity = '0';
+                setTimeout(() => {
+                    if (sticker.parentNode) {
+                        sticker.parentNode.removeChild(sticker);
+                    }
+                }, 500);
+            });
+            
+            stickerPositions.length = 0;
+            stickerCount = 0;
+            document.getElementById('count').textContent = stickerCount;
+        }
+
+        // 更新设置显示
+        function updateSettingsDisplay() {
+            document.getElementById('countValue').textContent = settings.stickerCount;
+            
+            let speedText;
+            switch(settings.animationSpeed) {
+                case 1: speedText = '很慢'; break;
+                case 2: speedText = '较慢'; break;
+                case 3: speedText = '正常'; break;
+                case 4: speedText = '较快'; break;
+                case 5: speedText = '很快'; break;
+                default: speedText = '正常';
+            }
+            document.getElementById('speedValue').textContent = speedText;
+            
+            let sizeText;
+            switch(settings.fontSize) {
+                case 1: sizeText = '很小'; break;
+                case 2: sizeText = '较小'; break;
+                case 3: sizeText = '中等'; break;
+                case 4: sizeText = '较大'; break;
+                case 5: sizeText = '很大'; break;
+                default: sizeText = '中等';
+            }
+            document.getElementById('sizeValue').textContent = sizeText;
+            
+            document.getElementById('enableParticles').checked = settings.enableParticles;
+            document.getElementById('enableHearts').checked = settings.enableHearts;
+        }
+
+        // 事件监听
+        document.getElementById('addBtn').addEventListener('click', function() {
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    createSticker();
+                }, i * 200);
+            }
+        });
+
+        document.getElementById('clearBtn').addEventListener('click', clearAllStickers);
+        
+        document.getElementById('settingsBtn').addEventListener('click', function() {
+            const panel = document.getElementById('settingsPanel');
+            panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+        });
+        
+        document.querySelector('.theme-toggle').addEventListener('click', toggleTheme);
+        
+        // 设置变化监听
+        document.getElementById('stickerCount').addEventListener('input', function() {
+            settings.stickerCount = parseInt(this.value);
+            updateSettingsDisplay();
+        });
+        
+        document.getElementById('animationSpeed').addEventListener('input', function() {
+            settings.animationSpeed = parseInt(this.value);
+            updateSettingsDisplay();
+        });
+        
+        document.getElementById('fontSize').addEventListener('input', function() {
+            settings.fontSize = parseInt(this.value);
+            updateSettingsDisplay();
+        });
+        
+        document.getElementById('enableParticles').addEventListener('change', function() {
+            settings.enableParticles = this.checked;
+            if (settings.enableParticles) {
+                createParticles();
+            } else {
+                clearParticles();
+            }
+        });
+        
+        document.getElementById('enableHearts').addEventListener('change', function() {
+            settings.enableHearts = this.checked;
+        });
 
         // 双击创建标签
         document.addEventListener('dblclick', function(e) {
@@ -467,21 +793,20 @@
             }
         });
 
-        // 事件监听
-        document.querySelector('.mode-toggle').addEventListener('click', toggleNightMode);
-
         // 页面加载时初始化
         window.addEventListener('load', function() {
-            // 初始创建15个标签
-            for (let i = 0; i < 15; i++) {
-                setTimeout(() => {
-                    createSticker();
-                }, i * 500);
-            }
+            // 初始化设置显示
+            updateSettingsDisplay();
+            
+            // 初始创建标签
+            initStickers(settings.stickerCount);
+            
+            // 创建粒子效果
+            createParticles();
             
             // 每隔一段时间创建一个新标签
             setInterval(() => {
-                if (stickerCount < 25) {
+                if (stickerCount < settings.stickerCount) {
                     createSticker();
                 }
             }, 3000);
