@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>灰原什么的最可爱了(●'◡'●)</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -11,10 +12,22 @@
             box-sizing: border-box;
         }
         
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #e74c3c;
+            --background-dark: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            --background-light: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --text-dark: #ecf0f1;
+            --text-light: #4a5568;
+            --card-dark: rgba(44, 62, 80, 0.7);
+            --card-light: rgba(255, 255, 255, 0.7);
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
         body {
             margin: 0;
             overflow: hidden;
-            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            background: var(--background-dark);
             font-family: "微软雅黑", "PingFang SC", sans-serif;
             height: 100vh;
             position: relative;
@@ -27,17 +40,21 @@
             top: 20px;
             left: 50%;
             transform: translateX(-50%);
-            color: #ecf0f1;
-            font-size: 2rem;
+            color: var(--text-dark);
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
             text-align: center;
             z-index: 100;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-            background: rgba(44, 62, 80, 0.7);
+            background: var(--card-dark);
             padding: 10px 20px;
             border-radius: 50px;
             backdrop-filter: blur(4px);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: var(--shadow);
             transition: all 0.3s ease;
+            max-width: 90%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         
         .title:hover {
@@ -58,6 +75,9 @@
             z-index: 1;
             font-weight: 500;
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+            max-width: 90vw;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         
         .sticker:hover {
@@ -78,6 +98,15 @@
             }
             75% {
                 transform: translateY(-10px) rotate(2deg);
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
             }
         }
         
@@ -125,17 +154,18 @@
             position: absolute;
             bottom: 20px;
             right: 20px;
-            background: rgba(44, 62, 80, 0.7);
+            background: var(--card-dark);
             padding: 10px 15px;
             border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: var(--shadow);
             font-size: 0.9rem;
-            color: #ecf0f1;
+            color: var(--text-dark);
             z-index: 100;
             backdrop-filter: blur(4px);
             display: flex;
             flex-direction: column;
             gap: 5px;
+            max-width: 200px;
         }
         
         .controls {
@@ -149,12 +179,12 @@
         }
         
         .control-btn {
-            background: rgba(44, 62, 80, 0.7);
+            background: var(--card-dark);
             padding: 8px 15px;
             border-radius: 50px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: var(--shadow);
             font-size: 0.9rem;
-            color: #ecf0f1;
+            color: var(--text-dark);
             backdrop-filter: blur(4px);
             cursor: pointer;
             transition: all 0.3s ease;
@@ -185,13 +215,15 @@
             background: rgba(44, 62, 80, 0.9);
             padding: 15px;
             border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            color: #ecf0f1;
+            box-shadow: var(--shadow);
+            color: var(--text-dark);
             z-index: 100;
             backdrop-filter: blur(4px);
             width: 220px;
             display: none;
             border: 1px solid rgba(255, 255, 255, 0.1);
+            max-height: 80vh;
+            overflow-y: auto;
         }
         
         .settings-panel h3 {
@@ -205,7 +237,7 @@
         .close-btn {
             background: none;
             border: none;
-            color: #ecf0f1;
+            color: var(--text-dark);
             font-size: 1.2rem;
             cursor: pointer;
             padding: 0;
@@ -244,7 +276,7 @@
             width: 15px;
             height: 15px;
             border-radius: 50%;
-            background: #3498db;
+            background: var(--primary-color);
             cursor: pointer;
         }
         
@@ -252,12 +284,12 @@
             position: absolute;
             top: 20px;
             left: 20px;
-            background: rgba(44, 62, 80, 0.7);
+            background: var(--card-dark);
             padding: 8px 15px;
             border-radius: 50px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: var(--shadow);
             font-size: 0.9rem;
-            color: #ecf0f1;
+            color: var(--text-dark);
             z-index: 100;
             backdrop-filter: blur(4px);
             cursor: pointer;
@@ -277,22 +309,23 @@
             position: absolute;
             bottom: 20px;
             left: 20px;
-            background: rgba(44, 62, 80, 0.7);
+            background: var(--card-dark);
             padding: 10px 15px;
             border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            color: #ecf0f1;
+            box-shadow: var(--shadow);
+            color: var(--text-dark);
             z-index: 100;
             backdrop-filter: blur(4px);
             display: flex;
             align-items: center;
             gap: 10px;
+            max-width: 250px;
         }
         
         .music-btn {
             background: none;
             border: none;
-            color: #ecf0f1;
+            color: var(--text-dark);
             font-size: 1.2rem;
             cursor: pointer;
             padding: 5px;
@@ -316,7 +349,7 @@
         
         .progress {
             height: 100%;
-            background: #3498db;
+            background: var(--primary-color);
             width: 0%;
             transition: width 0.1s linear;
         }
@@ -332,12 +365,12 @@
         }
         
         .effect-btn {
-            background: rgba(44, 62, 80, 0.7);
+            background: var(--card-dark);
             padding: 8px 15px;
             border-radius: 50px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: var(--shadow);
             font-size: 0.9rem;
-            color: #ecf0f1;
+            color: var(--text-dark);
             backdrop-filter: blur(4px);
             cursor: pointer;
             transition: all 0.3s ease;
@@ -360,14 +393,16 @@
             left: 50%;
             transform: translateX(-50%);
             background: rgba(44, 62, 80, 0.9);
-            color: #ecf0f1;
+            color: var(--text-dark);
             padding: 10px 20px;
             border-radius: 50px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: var(--shadow);
             z-index: 1000;
             backdrop-filter: blur(4px);
             display: none;
             animation: fadeInOut 3s ease;
+            text-align: center;
+            max-width: 80%;
         }
         
         @keyframes fadeInOut {
@@ -384,25 +419,221 @@
         .counter-icon {
             font-size: 1.2rem;
         }
+        
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--card-dark);
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            z-index: 100;
+            backdrop-filter: blur(4px);
+        }
+        
+        .mobile-menu-btn {
+            background: none;
+            border: none;
+            color: var(--text-dark);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 5px;
+        }
+        
+        .mobile-panel {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .mobile-panel button {
+            background: var(--card-dark);
+            border: none;
+            color: var(--text-dark);
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            width: 80%;
+            max-width: 300px;
+        }
+        
+        .close-mobile {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: var(--text-dark);
+            font-size: 2rem;
+            cursor: pointer;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .title {
+                top: 10px;
+                padding: 8px 16px;
+            }
+            
+            .controls, .effect-buttons, .theme-toggle {
+                display: none;
+            }
+            
+            .mobile-menu {
+                display: block;
+            }
+            
+            .info-panel {
+                bottom: 70px;
+                right: 10px;
+                font-size: 0.8rem;
+                padding: 8px 12px;
+            }
+            
+            .music-player {
+                bottom: 10px;
+                left: 10px;
+                padding: 8px 12px;
+            }
+            
+            .settings-panel {
+                top: 60px;
+                right: 10px;
+                width: calc(100% - 20px);
+                max-width: 300px;
+            }
+            
+            .sticker {
+                font-size: 14px;
+                padding: 8px 12px;
+            }
+        }
+        
+        @media (min-width: 769px) {
+            .mobile-menu, .mobile-panel {
+                display: none !important;
+            }
+        }
+        
+        /* 标签生成区域 */
+        .generation-area {
+            position: absolute;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--card-dark);
+            padding: 10px 15px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            color: var(--text-dark);
+            z-index: 100;
+            backdrop-filter: blur(4px);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 250px;
+        }
+        
+        .generation-area h4 {
+            margin-bottom: 5px;
+            font-size: 1rem;
+        }
+        
+        .auto-generation {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: var(--primary-color);
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
     </style>
 </head>
 <body>
     <div class="title">灰原什么的最可爱了(●'◡'●)</div>
-    <div class="theme-toggle">🌞 日间模式</div>
+    <div class="theme-toggle"><i class="fas fa-sun"></i> 日间模式</div>
     
     <div class="controls">
-        <button class="control-btn" id="clearBtn">🗑️ 清除标签</button>
-        <button class="control-btn" id="settingsBtn">⚙️ 设置</button>
+        <button class="control-btn" id="clearBtn"><i class="fas fa-trash"></i> 清除标签</button>
+        <button class="control-btn" id="settingsBtn"><i class="fas fa-cog"></i> 设置</button>
     </div>
     
     <div class="effect-buttons">
-        <button class="effect-btn" id="rainbowBtn">🌈 彩虹模式</button>
-        <button class="effect-btn" id="pulseBtn">💓 心跳模式</button>
-        <button class="effect-btn" id="explodeBtn">💥 爆炸效果</button>
+        <button class="effect-btn" id="rainbowBtn"><i class="fas fa-palette"></i> 彩虹模式</button>
+        <button class="effect-btn" id="pulseBtn"><i class="fas fa-heartbeat"></i> 心跳模式</button>
+        <button class="effect-btn" id="explodeBtn"><i class="fas fa-bomb"></i> 爆炸效果</button>
+    </div>
+    
+    <div class="mobile-menu">
+        <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fas fa-bars"></i></button>
+    </div>
+    
+    <div class="mobile-panel" id="mobilePanel">
+        <button class="close-mobile" id="closeMobile"><i class="fas fa-times"></i></button>
+        <button id="mobileClearBtn"><i class="fas fa-trash"></i> 清除标签</button>
+        <button id="mobileSettingsBtn"><i class="fas fa-cog"></i> 设置</button>
+        <button id="mobileRainbowBtn"><i class="fas fa-palette"></i> 彩虹模式</button>
+        <button id="mobilePulseBtn"><i class="fas fa-heartbeat"></i> 心跳模式</button>
+        <button id="mobileExplodeBtn"><i class="fas fa-bomb"></i> 爆炸效果</button>
+        <button id="mobileThemeBtn"><i class="fas fa-sun"></i> 切换主题</button>
     </div>
     
     <div class="settings-panel" id="settingsPanel">
-        <h3>设置 <button class="close-btn" id="closeSettings">×</button></h3>
+        <h3>设置 <button class="close-btn" id="closeSettings"><i class="fas fa-times"></i></button></h3>
         <div class="setting-item">
             <label for="stickerCount">标签数量: <span id="countValue">15</span></label>
             <input type="range" id="stickerCount" min="5" max="30" value="15">
@@ -436,20 +667,36 @@
         </div>
     </div>
     
+    <div class="generation-area">
+        <h4>标签生成控制</h4>
+        <div class="auto-generation">
+            <span>自动生成:</span>
+            <label class="toggle-switch">
+                <input type="checkbox" id="autoGenerate" checked>
+                <span class="slider"></span>
+            </label>
+        </div>
+        <div class="setting-item">
+            <label for="generationRate">生成频率: <span id="generationRateValue">正常</span></label>
+            <input type="range" id="generationRate" min="1" max="5" value="3">
+        </div>
+    </div>
+    
     <div class="info-panel">
         <div class="sticker-counter">
-            <span class="counter-icon">🏷️</span> 标签数量: <span id="count">0</span>
+            <span class="counter-icon"><i class="fas fa-tag"></i></span> 标签数量: <span id="count">0</span>
         </div>
         <div>点击标签可移除</div>
         <div>双击空白处添加标签</div>
     </div>
     
     <div class="music-player">
-        <button class="music-btn" id="playBtn">▶️</button>
-        <button class="music-btn" id="pauseBtn">⏸️</button>
+        <button class="music-btn" id="playBtn"><i class="fas fa-play"></i></button>
+        <button class="music-btn" id="pauseBtn"><i class="fas fa-pause"></i></button>
         <div class="progress-bar">
             <div class="progress" id="musicProgress"></div>
         </div>
+        <span id="musicTime">0:00</span>
     </div>
     
     <div class="notification" id="notification"></div>
@@ -591,21 +838,24 @@
             animationSpeed: 3,
             fontSize: 3,
             spawnRate: 3,
+            generationRate: 3,
             enableParticles: true,
             enableHearts: true,
-            enableMusic: true
+            enableMusic: true,
+            autoGenerate: true
         };
         
         // 音乐
-        let audioContext;
-        let audioSource;
+        let audio;
         let isPlaying = false;
-        let currentTime = 0;
-        let startTime = 0;
+        let musicInterval;
         
         // 特效模式
         let rainbowMode = false;
         let pulseMode = false;
+        
+        // 自动生成标签的计时器
+        let autoGenerationInterval;
 
         // 生成随机数的函数
         function getRandom(min, max) {
@@ -766,7 +1016,9 @@
                             sticker.parentNode.removeChild(sticker);
                             stickerCount--;
                             document.getElementById('count').textContent = stickerCount;
-                            createSticker();
+                            if (settings.autoGenerate) {
+                                createSticker();
+                            }
                         }
                     }, 500);
                 }
@@ -797,46 +1049,19 @@
             isNightMode = !isNightMode;
             
             if (isNightMode) {
-                document.body.style.background = 'linear-gradient(135deg, #2c3e50 0%, #34495e 100%)';
-                document.querySelector('.theme-toggle').innerHTML = '🌞 日间模式';
-                document.querySelector('.title').style.color = '#ecf0f1';
-                document.querySelector('.title').style.background = 'rgba(44, 62, 80, 0.7)';
-                document.querySelector('.info-panel').style.background = 'rgba(44, 62, 80, 0.7)';
-                document.querySelector('.info-panel').style.color = '#ecf0f1';
-                document.querySelectorAll('.control-btn').forEach(btn => {
-                    btn.style.background = 'rgba(44, 62, 80, 0.7)';
-                    btn.style.color = '#ecf0f1';
-                });
-                document.querySelector('.theme-toggle').style.background = 'rgba(44, 62, 80, 0.7)';
-                document.querySelector('.theme-toggle').style.color = '#ecf0f1';
-                document.querySelector('.settings-panel').style.background = 'rgba(44, 62, 80, 0.9)';
-                document.querySelector('.settings-panel').style.color = '#ecf0f1';
-                document.querySelectorAll('.effect-btn').forEach(btn => {
-                    btn.style.background = 'rgba(44, 62, 80, 0.7)';
-                    btn.style.color = '#ecf0f1';
-                });
-                document.querySelector('.music-player').style.background = 'rgba(44, 62, 80, 0.7)';
+                document.body.style.background = 'var(--background-dark)';
+                document.documentElement.style.setProperty('--text-dark', '#ecf0f1');
+                document.documentElement.style.setProperty('--text-light', '#4a5568');
+                document.documentElement.style.setProperty('--card-dark', 'rgba(44, 62, 80, 0.7)');
+                document.documentElement.style.setProperty('--card-light', 'rgba(255, 255, 255, 0.7)');
+                document.querySelector('.theme-toggle').innerHTML = '<i class="fas fa-sun"></i> 日间模式';
             } else {
-                document.body.style.background = 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)';
-                document.querySelector('.theme-toggle').innerHTML = '🌙 夜间模式';
-                document.querySelector('.title').style.color = '#4a5568';
-                document.querySelector('.title').style.background = 'rgba(255, 255, 255, 0.7)';
-                document.querySelector('.info-panel').style.background = 'rgba(255, 255, 255, 0.8)';
-                document.querySelector('.info-panel').style.color = '#4a5568';
-                document.querySelectorAll('.control-btn').forEach(btn => {
-                    btn.style.background = 'rgba(255, 255, 255, 0.8)';
-                    btn.style.color = '#4a5568';
-                });
-                document.querySelector('.theme-toggle').style.background = 'rgba(255, 255, 255, 0.8)';
-                document.querySelector('.theme-toggle').style.color = '#4a5568';
-                document.querySelector('.settings-panel').style.background = 'rgba(255, 255, 255, 0.9)';
-                document.querySelector('.settings-panel').style.color = '#4a5568';
-                document.querySelectorAll('.effect-btn').forEach(btn => {
-                    btn.style.background = 'rgba(255, 255, 255, 0.8)';
-                    btn.style.color = '#4a5568';
-                });
-                document.querySelector('.music-player').style.background = 'rgba(255, 255, 255, 0.8)';
-                document.querySelector('.music-player').style.color = '#4a5568';
+                document.body.style.background = 'var(--background-light)';
+                document.documentElement.style.setProperty('--text-dark', '#4a5568');
+                document.documentElement.style.setProperty('--text-light', '#ecf0f1');
+                document.documentElement.style.setProperty('--card-dark', 'rgba(255, 255, 255, 0.7)');
+                document.documentElement.style.setProperty('--card-light', 'rgba(44, 62, 80, 0.7)');
+                document.querySelector('.theme-toggle').innerHTML = '<i class="fas fa-moon"></i> 夜间模式';
             }
         }
 
@@ -921,6 +1146,7 @@
                 sticker.style.transition = 'all 0.5s ease';
                 sticker.style.transform = 'scale(0)';
                 sticker.style.opacity = '0';
+                
                 setTimeout(() => {
                     if (sticker.parentNode) {
                         sticker.parentNode.removeChild(sticker);
@@ -970,9 +1196,21 @@
             }
             document.getElementById('rateValue').textContent = rateText;
             
+            let generationText;
+            switch(settings.generationRate) {
+                case 1: generationText = '很慢'; break;
+                case 2: generationText = '较慢'; break;
+                case 3: generationText = '正常'; break;
+                case 4: generationText = '较快'; break;
+                case 5: generationText = '很快'; break;
+                default: generationText = '正常';
+            }
+            document.getElementById('generationRateValue').textContent = generationText;
+            
             document.getElementById('enableParticles').checked = settings.enableParticles;
             document.getElementById('enableHearts').checked = settings.enableHearts;
             document.getElementById('enableMusic').checked = settings.enableMusic;
+            document.getElementById('autoGenerate').checked = settings.autoGenerate;
         }
 
         // 显示通知
@@ -989,7 +1227,7 @@
         // 切换彩虹模式
         function toggleRainbowMode() {
             rainbowMode = !rainbowMode;
-            document.getElementById('rainbowBtn').innerHTML = rainbowMode ? '🌈 彩虹模式(开)' : '🌈 彩虹模式';
+            document.getElementById('rainbowBtn').innerHTML = rainbowMode ? '<i class="fas fa-palette"></i> 彩虹模式(开)' : '<i class="fas fa-palette"></i> 彩虹模式';
             showNotification(rainbowMode ? '彩虹模式已开启' : '彩虹模式已关闭');
             
             // 更新所有现有标签的颜色
@@ -1008,7 +1246,7 @@
         // 切换心跳模式
         function togglePulseMode() {
             pulseMode = !pulseMode;
-            document.getElementById('pulseBtn').innerHTML = pulseMode ? '💓 心跳模式(开)' : '💓 心跳模式';
+            document.getElementById('pulseBtn').innerHTML = pulseMode ? '<i class="fas fa-heartbeat"></i> 心跳模式(开)' : '<i class="fas fa-heartbeat"></i> 心跳模式';
             showNotification(pulseMode ? '心跳模式已开启' : '心跳模式已关闭');
             
             // 更新所有现有标签的动画
@@ -1051,6 +1289,77 @@
             showNotification('爆炸效果！所有标签已清除');
         }
 
+        // 初始化音乐
+        function initMusic() {
+            // 创建一个音频元素
+            audio = new Audio();
+            // 使用一个免费的音乐资源
+            audio.src = 'https://assets.mixkit.co/music/preview/mixkit-tech-house-vibes-130.mp3';
+            audio.loop = true;
+            
+            // 播放按钮事件
+            document.getElementById('playBtn').addEventListener('click', function() {
+                if (settings.enableMusic) {
+                    audio.play();
+                    isPlaying = true;
+                    updateMusicProgress();
+                }
+            });
+            
+            // 暂停按钮事件
+            document.getElementById('pauseBtn').addEventListener('click', function() {
+                audio.pause();
+                isPlaying = false;
+                clearInterval(musicInterval);
+            });
+            
+            // 更新音乐进度
+            function updateMusicProgress() {
+                if (isPlaying) {
+                    const progress = document.getElementById('musicProgress');
+                    const timeDisplay = document.getElementById('musicTime');
+                    
+                    musicInterval = setInterval(() => {
+                        if (audio.duration) {
+                            const percent = (audio.currentTime / audio.duration) * 100;
+                            progress.style.width = percent + '%';
+                            
+                            // 更新时间显示
+                            const minutes = Math.floor(audio.currentTime / 60);
+                            const seconds = Math.floor(audio.currentTime % 60);
+                            timeDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+                        }
+                    }, 100);
+                }
+            }
+        }
+
+        // 设置自动生成标签
+        function setupAutoGeneration() {
+            // 根据生成速度设置标签生成间隔
+            let spawnInterval;
+            switch(settings.generationRate) {
+                case 1: spawnInterval = 8000; break;
+                case 2: spawnInterval = 6000; break;
+                case 3: spawnInterval = 4000; break;
+                case 4: spawnInterval = 2000; break;
+                case 5: spawnInterval = 1000; break;
+                default: spawnInterval = 4000;
+            }
+            
+            // 清除之前的计时器
+            if (autoGenerationInterval) {
+                clearInterval(autoGenerationInterval);
+            }
+            
+            // 设置新的计时器
+            autoGenerationInterval = setInterval(() => {
+                if (settings.autoGenerate && stickerCount < settings.stickerCount) {
+                    createSticker();
+                }
+            }, spawnInterval);
+        }
+
         // 事件监听
         document.getElementById('clearBtn').addEventListener('click', clearAllStickers);
         
@@ -1087,6 +1396,12 @@
             updateSettingsDisplay();
         });
         
+        document.getElementById('generationRate').addEventListener('input', function() {
+            settings.generationRate = parseInt(this.value);
+            updateSettingsDisplay();
+            setupAutoGeneration();
+        });
+        
         document.getElementById('enableParticles').addEventListener('change', function() {
             settings.enableParticles = this.checked;
             if (settings.enableParticles) {
@@ -1104,10 +1419,58 @@
             settings.enableMusic = this.checked;
         });
         
+        document.getElementById('autoGenerate').addEventListener('change', function() {
+            settings.autoGenerate = this.checked;
+            if (settings.autoGenerate) {
+                setupAutoGeneration();
+            } else {
+                clearInterval(autoGenerationInterval);
+            }
+        });
+        
         // 特效按钮事件
         document.getElementById('rainbowBtn').addEventListener('click', toggleRainbowMode);
         document.getElementById('pulseBtn').addEventListener('click', togglePulseMode);
         document.getElementById('explodeBtn').addEventListener('click', explodeStickers);
+
+        // 移动端按钮事件
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            document.getElementById('mobilePanel').style.display = 'flex';
+        });
+        
+        document.getElementById('closeMobile').addEventListener('click', function() {
+            document.getElementById('mobilePanel').style.display = 'none';
+        });
+        
+        document.getElementById('mobileClearBtn').addEventListener('click', function() {
+            clearAllStickers();
+            document.getElementById('mobilePanel').style.display = 'none';
+        });
+        
+        document.getElementById('mobileSettingsBtn').addEventListener('click', function() {
+            document.getElementById('settingsPanel').style.display = 'block';
+            document.getElementById('mobilePanel').style.display = 'none';
+        });
+        
+        document.getElementById('mobileRainbowBtn').addEventListener('click', function() {
+            toggleRainbowMode();
+            document.getElementById('mobilePanel').style.display = 'none';
+        });
+        
+        document.getElementById('mobilePulseBtn').addEventListener('click', function() {
+            togglePulseMode();
+            document.getElementById('mobilePanel').style.display = 'none';
+        });
+        
+        document.getElementById('mobileExplodeBtn').addEventListener('click', function() {
+            explodeStickers();
+            document.getElementById('mobilePanel').style.display = 'none';
+        });
+        
+        document.getElementById('mobileThemeBtn').addEventListener('click', function() {
+            toggleTheme();
+            document.getElementById('mobilePanel').style.display = 'none';
+        });
 
         // 双击创建标签
         document.addEventListener('dblclick', function(e) {
@@ -1134,23 +1497,11 @@
             // 创建粒子效果
             createParticles();
             
-            // 根据生成速度设置标签生成间隔
-            let spawnInterval;
-            switch(settings.spawnRate) {
-                case 1: spawnInterval = 5000; break;
-                case 2: spawnInterval = 4000; break;
-                case 3: spawnInterval = 3000; break;
-                case 4: spawnInterval = 2000; break;
-                case 5: spawnInterval = 1000; break;
-                default: spawnInterval = 3000;
-            }
+            // 设置自动生成标签
+            setupAutoGeneration();
             
-            // 每隔一段时间创建一个新标签
-            setInterval(() => {
-                if (stickerCount < settings.stickerCount) {
-                    createSticker();
-                }
-            }, spawnInterval);
+            // 初始化音乐
+            initMusic();
         });
     </script>
 </body>
