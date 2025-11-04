@@ -641,44 +641,6 @@
             }
         }
         
-        .floating-controls {
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            z-index: 100;
-        }
-        
-        .floating-btn {
-            background: var(--card-dark);
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            box-shadow: var(--shadow);
-            color: var(--text-dark);
-            backdrop-filter: blur(12px);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: none;
-            font-family: inherit;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .floating-btn:hover {
-            background: rgba(52, 73, 94, 0.9);
-            transform: scale(1.1);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
-        }
-        
-        .floating-btn i {
-            font-size: 1.2rem;
-        }
-        
         .custom-text-input {
             position: absolute;
             top: 50%;
@@ -800,8 +762,8 @@
             <input type="range" id="fontSize" min="1" max="5" value="3">
         </div>
         <div class="setting-item">
-            <label for="maxStickers">最大标签数: <span id="maxStickersValue">50</span></label>
-            <input type="range" id="maxStickers" min="10" max="100" value="50">
+            <label for="maxStickers">最大标签数: <span id="maxStickersValue">100</span></label>
+            <input type="range" id="maxStickers" min="10" max="200" value="100">
         </div>
         <div class="setting-item">
             <label>
@@ -833,15 +795,15 @@
         </div>
         <div class="stat-item">
             <span>最大标签数:</span>
-            <span id="maxStickersDisplay">50</span>
+            <span id="maxStickersDisplay">100</span>
         </div>
         <div class="stat-item">
             <span>生成速度:</span>
-            <span id="generationSpeed">1-3秒</span>
+            <span id="generationSpeed">1秒/个</span>
         </div>
         <div class="stat-item">
-            <span>删除速度:</span>
-            <span id="removalSpeed">2秒</span>
+            <span>删除条件:</span>
+            <span id="removalSpeed">达到100个</span>
         </div>
     </div>
     
@@ -852,12 +814,6 @@
             <button class="cancel" id="cancelCustomText">取消</button>
             <button id="saveCustomText">添加</button>
         </div>
-    </div>
-    
-    <div class="floating-controls">
-        <button class="floating-btn" id="addStickerBtn"><i class="fas fa-plus"></i></button>
-        <button class="floating-btn" id="floatingSettingsBtn"><i class="fas fa-cog"></i></button>
-        <button class="floating-btn" id="floatingStatsBtn"><i class="fas fa-chart-bar"></i></button>
     </div>
     
     <div class="music-player">
@@ -1001,7 +957,7 @@
         let settings = {
             animationSpeed: 3,
             fontSize: 3,
-            maxStickers: 50,
+            maxStickers: 100,
             enableParticles: true,
             enableHearts: true,
             enableMusic: true,
@@ -1016,7 +972,6 @@
         let pulseMode = false;
         
         let autoGenerationInterval;
-        let autoRemovalInterval;
 
         // 辅助函数
         function getRandom(min, max) {
@@ -1340,7 +1295,7 @@
             for (let i = 0; i < count; i++) {
                 setTimeout(() => {
                     createSticker();
-                }, i * 300);
+                }, i * 100);
             }
         }
 
@@ -1475,8 +1430,8 @@
         function initMusic() {
             // 创建音频元素
             audio = new Audio();
-            // 使用一个可靠的音乐源 - 替换为公共领域的音乐
-            audio.src = 'https://assets.codepen.io/1468070/Chill-Out-Lo-Fi-Study-Music.mp3';
+            // 使用用户提供的音乐链接
+            audio.src = 'https://m801.music.126.net/20251104220540/8d846d1873611f77c92a5f0e37677fcd/jdymusic/obj/wo3DlMOGwrbDjj7DisKw/18761560338/6cbf/e4f9/cc89/6aa61e4ca56ff2de994532e7078031ca.mp3?vuutv=xTZpoLrWMJiqe8RiA0K5wiGON18wTa858/h6RFB3ExVcWulVtg+ZNKwOOEcvOLoLKDt7hYRxsQraiosCP94sKpXKPmgaiXEss/D/S3EwknA=&authSecret=0000019a4f192a290bf80a3b18fb071c&cdntag=bWFyaz1vc193ZWIscXVhbGl0eV9leGhpZ2g';
             audio.loop = true;
             
             // 播放按钮事件
@@ -1528,32 +1483,16 @@
             });
         }
 
-        // 设置自动生成 - 每1-3秒随机生成一个标签
+        // 设置自动生成 - 每秒生成一个新标签
         function setupAutoGeneration() {
             if (autoGenerationInterval) {
                 clearInterval(autoGenerationInterval);
             }
             
-            function generateSticker() {
+            // 每秒生成一个标签
+            autoGenerationInterval = setInterval(() => {
                 createSticker();
-                const nextTime = getRandom(1000, 3000); // 1-3秒随机
-                autoGenerationInterval = setTimeout(generateSticker, nextTime);
-            }
-            
-            autoGenerationInterval = setTimeout(generateSticker, getRandom(1000, 3000));
-        }
-
-        // 设置自动删除 - 当标签数量达到50个时，每2秒删除最早的标签
-        function setupAutoRemoval() {
-            if (autoRemovalInterval) {
-                clearInterval(autoRemovalInterval);
-            }
-            
-            autoRemovalInterval = setInterval(() => {
-                if (stickerCount >= settings.maxStickers) {
-                    removeOldestSticker();
-                }
-            }, 2000); // 每2秒检查一次
+            }, 1000);
         }
 
         // 切换编辑模式
@@ -1652,11 +1591,6 @@
                 panel.style.display = 'block';
             });
             
-            document.getElementById('floatingSettingsBtn').addEventListener('click', function() {
-                const panel = document.getElementById('settingsPanel');
-                panel.style.display = 'block';
-            });
-            
             document.getElementById('closeSettings').addEventListener('click', function() {
                 const panel = document.getElementById('settingsPanel');
                 panel.style.display = 'none';
@@ -1707,10 +1641,6 @@
             document.getElementById('pulseBtn').addEventListener('click', togglePulseMode);
             document.getElementById('explodeBtn').addEventListener('click', explodeStickers);
             
-            document.getElementById('addStickerBtn').addEventListener('click', function() {
-                createSticker();
-            });
-
             document.getElementById('mobileMenuBtn').addEventListener('click', function() {
                 document.getElementById('mobilePanel').style.display = 'flex';
             });
@@ -1769,14 +1699,12 @@
 
             // 统计信息
             document.getElementById('statsBtn').addEventListener('click', showStatsPanel);
-            document.getElementById('floatingStatsBtn').addEventListener('click', showStatsPanel);
 
             // 点击统计面板外部关闭它
             document.addEventListener('click', function(e) {
                 const statsPanel = document.getElementById('statsPanel');
                 if (statsPanel.style.display === 'block' && !statsPanel.contains(e.target) && 
-                    e.target.id !== 'statsBtn' && e.target.id !== 'floatingStatsBtn' && 
-                    e.target.id !== 'mobileStatsBtn') {
+                    e.target.id !== 'statsBtn' && e.target.id !== 'mobileStatsBtn') {
                     statsPanel.style.display = 'none';
                 }
             });
@@ -1806,16 +1734,13 @@
             updateSettingsDisplay();
             
             // 初始化标签
-            initStickers(5);
+            initStickers(20);
             
             // 创建粒子效果
             createParticles();
             
             // 设置自动生成
             setupAutoGeneration();
-            
-            // 设置自动删除
-            setupAutoRemoval();
             
             // 初始化音乐
             initMusic();
@@ -1827,7 +1752,7 @@
             updateStats();
             
             // 显示初始通知
-            showNotification('页面已加载完成！');
+            showNotification('页面已加载完成！每秒生成一个新标签');
         });
     </script>
 </body>
