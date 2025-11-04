@@ -1,10 +1,111 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-    <title>欢迎来到我的网站</title>
+    <meta charset="UTF-8">
+    <title>动态彩色文字标签</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #f0f0f0;
+        }
+        .sticker {
+            position: absolute;
+            padding: 8px 12px;
+            border-radius: 4px;
+            color: white;
+            font-family: "微软雅黑", sans-serif;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            white-space: nowrap;
+            animation: float 8s infinite ease-in-out;
+        }
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0);
+            }
+            50% {
+                transform: translateY(-20px) rotate(2deg);
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Hello World!</h1>
-    <p>我的域名 chhz.我爱你 即将可以访问了！</p>
+    <script>
+        // 定义多条温暖的文字内容
+        const texts = [
+            "生活合格祝你",
+            "时间会治愈一切",
+            "你是最美的意外",
+            "勇敢一点",
+            "记得多穿衣服",
+            "明天会更好",
+            "风会告诉你方向",
+            "今天也要元气满满",
+            "保持可爱",
+            "一切都会好起来",
+            "平安喜乐",
+            "小幸运在路上",
+            "你是独一无二的",
+            "今天会更好",
+            "努力会有回响",
+            "做个发光的人",
+            "心怀浪漫宇宙",
+            "没有过不去的坎",
+            "我看好你",
+            "阳光会来的",
+            "路上注意安全",
+            "多喝热水",
+            "开心每一天",
+            "未来在等你",
+            "相信自己",
+            "记得吃早饭"
+        ];
+
+        // 定义多种颜色
+        const colors = [
+            "rgba(255, 99, 132, 0.8)",
+            "rgba(54, 162, 235, 0.8)",
+            "rgba(255, 206, 86, 0.8)",
+            "rgba(75, 192, 192, 0.8)",
+            "rgba(153, 102, 255, 0.8)",
+            "rgba(255, 159, 64, 0.8)"
+        ];
+
+        // 生成随机数的函数
+        function getRandom(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+
+        // 生成文字标签
+        function createSticker() {
+            const sticker = document.createElement("div");
+            sticker.className = "sticker";
+            // 随机选择文字和颜色
+            const text = texts[Math.floor(Math.random() * texts.length)];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            sticker.textContent = text;
+            sticker.style.backgroundColor = color;
+            // 随机位置
+            sticker.style.left = `${getRandom(5, 95)}%`;
+            sticker.style.top = `${getRandom(5, 95)}%`;
+            // 随机动画延迟和持续时间
+            sticker.style.animationDelay = `${getRandom(0, 5)}s`;
+            sticker.style.animationDuration = `${getRandom(6, 12)}s`;
+            document.body.appendChild(sticker);
+
+            // 一段时间后移除并重新生成，保持动态
+            setTimeout(() => {
+                document.body.removeChild(sticker);
+                createSticker();
+            }, getRandom(8000, 15000));
+        }
+
+        // 初始化，生成多个标签
+        for (let i = 0; i < 15; i++) {
+            setTimeout(() => {
+                createSticker();
+            }, i * 1000);
+        }
+    </script>
 </body>
 </html>
